@@ -28,6 +28,7 @@ class AdminController extends Controller
             $customMessages = [
                 'email.required' => "Email wajib diisi..",
                 'email.email' => "Format email tidak sesuai",
+                'email.max' => "Email hanya boleh maksimal 255 karakter",
                 'password.required' => "Password wajib diisi..",
 
 
