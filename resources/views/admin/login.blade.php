@@ -34,16 +34,42 @@
               
               @if(Session::has('error_message'))
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>ERROR : </strong> {{ Session::get('error_message') }}
+                <strong>ERROR : </strong> <br>
+                {{ Session::get('error_message') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               @endif
+
+              @if ($errors->any())
+                  {{-- <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div> --}}
+
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    
+                      <strong>ERROR : </strong> 
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                      
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                   
+                  </div>
+              @endif
               
               <form class="pt-3" action="{{ url('admin/login') }}" method="post"> @csrf
                 <div class="form-group">
-                  <input type="email" name="email" id="email" class="form-control form-control-lg"  placeholder="Username">
+                  <input type="email" name="email" id="email" class="form-control form-control-lg"  placeholder="Username" required="">
                 </div>
                 <div class="form-group">
                   <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Password" required="">

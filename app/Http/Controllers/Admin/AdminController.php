@@ -19,13 +19,26 @@ class AdminController extends Controller
     {
         if ($request->isMethod('POST')) {
             $data = $request->all();
-            // echo "<pre>";
-            // print_r($data);
-            // //die;
+
+            $rules = [
+                'email' => 'required|email|max:255',
+                'password' => 'required',
+            ];
+
+            $customMessages = [
+                'email.required' => "Email wajib diisi..",
+                'email.email' => "Format email tidak sesuai",
+                'password.required' => "Password wajib diisi..",
+
+
+            ];
+
+            $this->validate($request, $rules, $customMessages);
+            
             if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => '1'])) {
                 return redirect('admin/dashboard');
             } else {
-                return redirect()->back()->with('error_message', 'Invalid Username or Invalid Password');
+                return redirect()->back()->with('error_message', 'Email atau Password tidak valid!');
             }
         }
         return view('admin.login');
