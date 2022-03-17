@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Hash;
-//use Auth;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -30,8 +30,6 @@ class AdminController extends Controller
                 'email.email' => "Format email tidak sesuai",
                 'email.max' => "Email hanya boleh maksimal 255 karakter",
                 'password.required' => "Password wajib diisi..",
-
-
             ];
 
             $this->validate($request, $rules, $customMessages);
@@ -48,5 +46,12 @@ class AdminController extends Controller
     public function logout(){
         Auth::guard('admin')->logout();
         return redirect('admin/login');
+    }
+
+    public function updateAdminPassword()
+    {
+        // echo "<pre>"; print_r(Auth::guard('admin')->user()); die;
+        $adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+        return view('admin.settings.update_admin_password')->with(compact('adminDetails'));
     }
 }
