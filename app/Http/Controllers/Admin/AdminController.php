@@ -73,6 +73,34 @@ class AdminController extends Controller
         return view('admin.settings.update_admin_password')->with(compact('adminDetails'));
     }
 
+    public function updateAdminDetails(Request $request){
+        //$adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+        if($request->isMethod('post')){
+             $data = $request->all();
+
+             $rules = [
+                 'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                 'admin_mobile' => 'required|numeric|digits_between:8,15',
+             ];
+
+
+             $customMessages = [
+                 'admin_name.required' => 'Name field is required',
+                 'admin_name.regex' => 'Valid name is required',
+                 'admin_mobile.required' => 'Mobile is required',
+                 'admin_mobile.numeric' => 'Mobile just can be filled with number',
+                 'admin_mobile.digits_between' => 'Mobile length is from 8 to 15 digits',
+             ];
+
+             $this->validate($request, $rules, $customMessages);
+             Admin::where('email', $data['email'])->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'] ]);
+             return redirect()->back()->with('success_message', 'Admin Details has been updated successfully');
+
+        }
+        
+        return view('admin.settings.update_admin_details');
+    }
+
 
     public function checkCurrentPassword(Request $request){
         $data = $request->all();

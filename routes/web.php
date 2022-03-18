@@ -31,12 +31,17 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Admin Dashboard Route
         Route::get('dashboard', 'AdminController@dashboard');
 
-        // Update Admin Password
-        Route::match(['get', 'post'], 'update-admin-password', 'AdminController@updateAdminPassword');
-
         // Check Current Password
         Route::post( 'check-current-password', 'AdminController@checkCurrentPassword');
 
+
+        // Update Admin Password
+        Route::match(['get', 'post'], 'update-admin-password', 'AdminController@updateAdminPassword');
+
+        // Update Admin Details
+        Route::match(['get', 'post'], 'update-admin-details', 'AdminController@updateAdminDetails');
+
+        
         // Admin Logout
         Route::get('logout', 'AdminController@logout');
     });
