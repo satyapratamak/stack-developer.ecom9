@@ -80,7 +80,7 @@
                     @endif
                   
                   <form class="forms-sample" action="{{ url('/admin/update-admin-details') }}" method="post"
-                  name="updateAdminDetailsForm" id="updateAdminDetailsForm"> @csrf
+                  name="updateAdminDetailsForm" id="updateAdminDetailsForm" enctype="multipart/form-data"> @csrf
                     <div class="form-group">
                       <label>Username / Email Address</label>
                       <input class="form-control" value="{{ Auth::guard('admin')->user()->email }}" id="email" name="email" readonly="">
@@ -91,13 +91,21 @@
                     </div>
                     <div class="form-group">
                       <label for="admin_name">Name</label>
-                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name }}" id="admin_name" name="admin_name" placeholder="Enter Current Password" required="">
+                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name }}" id="admin_name" name="admin_name" placeholder="Please Enter Admin Name" required="">
                       
                     </div>
                     <div class="form-group">
                       <label for="admin_mobile">Mobile</label>
                       <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_mobile" name="admin_mobile" 
                       placeholder="Enter minimum 5 digit and maximum 15 digit of mobile number" required="" maxlength="20" minlength="5">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="admin_image">Admin Image</label>
+                      <input type="file" class="form-control" id="admin_image" name="admin_image">
+                      @if(!empty(Auth::guard('admin')->user()->image))
+                        <a target="_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">  View Image </a>
+                      @endif
                     </div>
                     
                     

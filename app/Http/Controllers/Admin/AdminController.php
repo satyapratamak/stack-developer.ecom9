@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Hash;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
+use Image;
 
 class AdminController extends Controller
 {
@@ -77,6 +78,8 @@ class AdminController extends Controller
         //$adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
         if($request->isMethod('post')){
              $data = $request->all();
+            //  echo "<pre>"; print_r($data); die;
+        
 
              $rules = [
                  'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
@@ -92,8 +95,30 @@ class AdminController extends Controller
                  'admin_mobile.digits_between' => 'Mobile length is from 8 to 15 digits',
              ];
 
+             // Upload Admin Photo
+             if ($request->hasFile('admin_image')){
+                $image_temp = $request->file('admin_image');
+                if ($image_temp->isValid()) {
+
+                    // Get Image Extension
+                    $extension = $image_temp->getClientOriginalExtension();
+
+                    // Generate File Named
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $imagePath = 'admin/images/photos/'.$imageName;
+
+                    Image::make($image_temp)->save($imagePath);
+
+                }
+
+             }else if (!empty(Auth::guard('admin')->user()->image)){
+                $imageName = Auth::guard('admin')->user()->image;
+             }else{
+                 $imageName = "";
+             }
+
              $this->validate($request, $rules, $customMessages);
-             Admin::where('email', $data['email'])->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'] ]);
+             Admin::where('email', $data['email'])->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'], 'image'=> $imageName ]);
              return redirect()->back()->with('success_message', 'Admin Details has been updated successfully');
 
         }
