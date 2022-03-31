@@ -287,7 +287,7 @@ class AdminController extends Controller
                     'shop_pincode' => $data['shop_pincode'],
                     'shop_mobile' => $data['shop_mobile'],
                     'shop_website' => $data['shop_website'],
-                    //'shop_email' => $data['shop_email'],
+
                     'address_proof' => $data['address_proof'],
                     'address_proof_image' => $imageName,
                     'business_license_number' => $data['business_license_number'],
