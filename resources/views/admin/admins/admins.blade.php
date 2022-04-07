@@ -69,9 +69,9 @@
                           </td>
                           <td>
                             @if($admin['status'] == 1)
-                              <i style="font-size:30px" class="mdi mdi-bookmark-check" />
+                              <i style="font-size:25px" class="mdi mdi-bookmark-check" />
                             @else
-                              <i style="font-size:30px" class="mdi mdi-bookmark-outline" />
+                              <i style="font-size:25px" class="mdi mdi-bookmark-outline" />
                             @endif
                             
                           </td>
