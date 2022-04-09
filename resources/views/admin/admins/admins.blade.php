@@ -1,10 +1,8 @@
 @extends('admin.layout.layout')
 @section('content')
-
 <div class="main-panel">
         <div class="content-wrapper">
-          <div class="row">
-            
+          <div class="row">     
             
             
             <div class="col-lg-12 grid-margin stretch-card">
@@ -69,14 +67,18 @@
                           </td>
                           <td>
                             @if($admin['status'] == 1)
-                              <i style="font-size:25px" class="mdi mdi-bookmark-check" />
+                              <i style="font-size:25px" class="mdi mdi-bookmark-check">
                             @else
-                              <i style="font-size:25px" class="mdi mdi-bookmark-outline" />
+                              <i style="font-size:25px" class="mdi mdi-bookmark-outline">
                             @endif
                             
                           </td>
                           <td>
-                            
+                            @if($admin['type'] == 'vendor')
+                              <a href="{{ url('admin/view-vendor-details/'.$admin['id']) }}">
+                                <i style="font-size:25px" class="mdi mdi-file-document"> </i>
+                              </a>
+                            @endif
                           </td>
                           
                         </tr>
