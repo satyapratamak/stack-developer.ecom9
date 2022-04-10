@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    //Check Admin Password is Correct or not
     $('#current_password').keyup(function () {
         let current_password = $('#current_password').val();
 
@@ -20,6 +21,37 @@ $(document).ready(function () {
             error: function (err) {
                 alert(err);
             }
+
+        });
+    });
+
+    // Update Admin Status
+    $(document).on("click",".updateAdminStatus", function(){
+        let status = $(this).children("i").attr("status");
+        let admin_id = $(this).attr("admin_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "/admin/update-admin-status",
+            data: {status:status, admin_id:admin_id},
+            success: function(resp){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    alert("This user is now InActive");
+                    $("#admin-"+admin_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-outline' status='InActive'> </i>");
+                    
+                }else if(resp['status'] == 1){
+                    alert("This user is now Active");
+                    $("#admin-"+admin_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
+                    
+                }
+
+            },
+            error: function(){
+                alert("Error happen..Please refresh the page and do it again..");
+            },
 
         });
     });
