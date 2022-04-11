@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use App\Models\VendorsBusinessDetails;
+use Illuminate\Support\Facades\Session;
+
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
+        Session::put('page', 'dashboard');
         return view('admin.dashboard');
     }
 
@@ -58,8 +61,7 @@ class AdminController extends Controller
 
     public function updateAdminPassword(Request $request)
     {
-        // echo "<pre>"; print_r(Auth::guard('admin')->user()); die;
-
+        Session::put('page', 'update_admin_password');
         if ($request->isMethod('post')) {
             $data = $request->all();
 
@@ -83,7 +85,7 @@ class AdminController extends Controller
 
     public function updateAdminDetails(Request $request)
     {
-        //$adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+        Session::put('page', 'update_admin_details');
         if ($request->isMethod('post')) {
             $data = $request->all();
             //  echo "<pre>"; print_r($data); die;
@@ -134,7 +136,7 @@ class AdminController extends Controller
     public function updateVendorDetails($slug, Request $request)
     {
         if ($slug == "personal") {
-
+            Session::put('page', 'update_vendor_details_personal');
             if ($request->isMethod('POST')) {
 
                 $data = $request->all();
@@ -219,6 +221,8 @@ class AdminController extends Controller
 
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == "business") {
+
+            Session::put('page', 'update_vendor_details_business');
             if ($request->isMethod('POST')) {
 
                 $data = $request->all();
@@ -301,7 +305,7 @@ class AdminController extends Controller
 
             $vendorDetails = VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == "bank") {
-
+            Session::put('page', 'update_vendor_details_bank');
             if ($request->isMethod('POST')) {
 
                 $data = $request->all();
@@ -374,8 +378,10 @@ class AdminController extends Controller
         if (!empty($type)) {
             $admins = $admins->where('type', $type);
             $title = ucfirst($type) . "s";
+            Session::put('page', 'view_' . strtolower($title));
         } else {
             $title = "Admins / Subadmins / Vendors";
+            Session::put('page', 'view_all');
         }
         $admins = $admins->get()->toArray();
 
@@ -385,6 +391,7 @@ class AdminController extends Controller
 
     public function viewVendorDetails($id)
     {
+        Session::put('page', 'view_vendor_details');
         $vendorDetails = Admin::with('vendorPersonal', 'vendorBusiness', 'vendorBank')->where('id', $id)->first();
         $vendorDetails = json_decode(json_encode($vendorDetails), true);
         //dd($vendorDetails);
