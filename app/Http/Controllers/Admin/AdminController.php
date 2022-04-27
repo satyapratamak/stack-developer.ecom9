@@ -6,8 +6,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Admin;
 //use Hash;
 use App\Models\Vendor;
-use Illuminate\Http\Request;
+use App\Models\Country;
 
+use Illuminate\Http\Request;
 use App\Models\VendorsBankDetails;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -141,7 +142,9 @@ class AdminController extends Controller
 
                 $data = $request->all();
 
-                //echo "<pre>"; print_r($data); die;
+                // echo "<pre>";
+                // print_r($data);
+                // die;
 
 
                 $rules = [
@@ -355,8 +358,8 @@ class AdminController extends Controller
             $vendorDetails = VendorsBankDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }
 
-
-        return view('admin.settings.update_vendor_details')->with(compact('slug', 'vendorDetails'));
+        $countries = Country::where('status', 1)->get()->toArray();
+        return view('admin.settings.update_vendor_details')->with(compact('slug', 'vendorDetails', 'countries'));
     }
 
 

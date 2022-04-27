@@ -114,7 +114,20 @@
 
                     <div class="form-group">
                       <label for="country">Country</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="country" name="country" placeholder="Enter Country" required="">
+                      {{-- <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="country" name="country" placeholder="Enter Country" required=""> --}}
+                      <select class="form-control" id="country" name="country">
+                        <option value="">Select Country</option>
+                        @foreach ($countries as $country )
+                        <option value="{{ $country['country_name'] }}"
+                        @if ($country['country_name'] == $vendorDetails['country'])
+                        selected
+                        @endif
+                        
+                        >{{ $country['country_name'] }}</option>
+                          
+                        @endforeach
+
+                      </select>
                       
                     </div>
 
