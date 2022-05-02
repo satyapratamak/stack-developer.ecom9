@@ -71,6 +71,12 @@
   <!-- Custom js -->
   <script src="{{ url('admin/js/custom.js') }}"></script>
   <!-- End Custom js -->
+
+  <!-- Sweet Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- End Sweet Alert -->
+
 </body>
 
 </html>
