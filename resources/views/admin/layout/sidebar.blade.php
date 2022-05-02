@@ -159,7 +159,7 @@
                     @else
                       style="background:#fff  !important; color:#4B49AC!important;"
                     @endif
-                  class="nav-link" href="{{ url('admin/admins/subadmin') }}">Sub Admins</a>
+                  class="nav-link" href="{{ url('admin/categories') }}">Categories</a>
                 </li>
                 <li class="nav-item"> 
                   <a 
@@ -168,7 +168,7 @@
                     @else
                       style="background:#fff  !important; color:#4B49AC!important;"
                     @endif
-                    class="nav-link" href="{{ url('admin/admins/vendor') }}">Vendors</a>
+                    class="nav-link" href="{{ url('admin/products') }}">Products</a>
                 </li>
                 
               </ul>

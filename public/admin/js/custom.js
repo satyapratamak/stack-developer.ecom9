@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     // call datatables
     $('#sections').DataTable();
+    $('#categories').DataTable();
 
 
     $('.nav-item').removeClass('active');
@@ -63,7 +64,7 @@ $(document).ready(function () {
         });
     });
 
-    // Update Admin Status
+    // Update Section Status
     $(document).on("click",".updateSectionStatus", function(){
         let status = $(this).children("i").attr("status");
         let section_id = $(this).attr("section_id");
@@ -129,6 +130,37 @@ $(document).ready(function () {
             }
             
         })
+    });
+
+    // Update Category Status
+    $(document).on("click",".updateCategoryStatus", function(){
+        let status = $(this).children("i").attr("status");
+        let category_id = $(this).attr("category_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "/admin/update-category-status",
+            data: {status:status, category_id:category_id},
+            success: function(resp){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    alert("This user is now InActive");
+                    $("#category-"+category_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-outline' status='InActive'> </i>");
+                    
+                }else if(resp['status'] == 1){
+                    alert("This user is now Active");
+                    $("#category-"+category_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
+                    
+                }
+
+            },
+            error: function(){
+                alert("Error happen..Please refresh the page and do it again..");
+            },
+
+        });
     });
     
 

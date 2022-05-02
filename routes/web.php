@@ -73,5 +73,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get', 'post'], 'add-edit-section/{id?}', 'SectionController@addEditSection');
         //Route::match(['get', 'post'], 'add-edit-section/{id}', 'SectionController@addEditSection');
         Route::match(['get', 'post'], 'add-section/', 'SectionController@addSection');
+
+        /** CATEGORY **/
+        Route::get('categories', 'CategoryController@categories');
+        Route::post('update-category-status', 'CategoryController@updateCategoryStatus');
     });
 });
