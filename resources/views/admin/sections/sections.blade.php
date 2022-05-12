@@ -8,6 +8,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
+                  <h3 class="font-weight-bold">CATALOGUE MANAGEMENT</h3>
                   <h4 class="card-title">Sections</h4>
                   {{-- <p class="card-description">
                     Add class <code>.table-bordered</code>

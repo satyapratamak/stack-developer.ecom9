@@ -8,6 +8,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
+                  <h3 class="font-weight-bold">CATALOGUE MANAGEMENT</h3>
                   <h4 class="card-title">Categories</h4>
                   {{-- <p class="card-description">
                     Add class <code>.table-bordered</code>
@@ -87,10 +88,12 @@
                           
                         @if (isset($category['parent_category']['category_name']) && !empty($category['parent_category']['category_name']))
                             
-                        {{ $parent_category = $category['parent_category']['category_name'] }}
+                        <?php $parent_category = $category['parent_category']['category_name']  ?>
+                       
                         
                         @else
-                        {{ $parent_category = "Root" }}    
+                        <?php $parent_category = "Root"?>
+                           
                         
                         @endif
                         
