@@ -47,6 +47,8 @@ class CategoryController extends Controller
             $title = "Edit Category";
             $category = Category::find($id);
             $message = "Category updated successfully";
+
+            dd($category);
         }
 
         if ($request->isMethod('POST')) {
