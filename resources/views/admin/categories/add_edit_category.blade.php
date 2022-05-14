@@ -105,19 +105,22 @@
                     </div>
                     <div class="form-group">
                       <label for="section_id">Section Name</label>
-                      <select name="section_id" id="section_id" class="form-control">
+                      <select name="section_id" id="section_id" class="form-control" style="color:#000">
                           <option value="">-- Select Section --</option>
                           @foreach ($getSection as $section )
-                          <option value="{{ $section['id'] }}">{{ $section['name'] }}</option>                              
+                          <option value="{{ $section['id'] }}"
+                            @if($category["section_id"] == $section['id'])
+                              selected=""
+                            @endif
+                          >{{ $section['name'] }}</option>                              
                           @endforeach
                       </select>                      
                     </div>
 
-                    <div class="form-group">
-                      <label for="parent_id">Select Category Level</label>
-                      <select name="parent_id" id="parent_id" class="form-control">
-                          <option value="0">Main Category</option>                          
-                      </select>                      
+                    
+
+                    <div id="appendCategoriesLevel">
+                      @include('admin.categories.append_categories_level')
                     </div>
 
                     <div class="form-group">

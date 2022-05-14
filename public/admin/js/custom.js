@@ -132,6 +132,33 @@ $(document).ready(function () {
         })
     });
 
+    // Append Categories Level
+    $("#section_id").change(function(){
+        var section_id = $(this).val();
+        // $.ajaxSetup({
+            
+        // });
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'get',
+            url: '/admin/append-categories-level',
+            data: {
+                section_id : section_id,
+            },
+            success: function(resp){
+               
+                $("#appendCategoriesLevel").html(resp);
+            },
+            error: function(){
+                alert("Error");
+            }
+        });
+    });
+
+
     // Update Category Status
     $(document).on("click",".updateCategoryStatus", function(){
         let status = $(this).children("i").attr("status");
@@ -162,6 +189,8 @@ $(document).ready(function () {
 
         });
     });
+
+    
     
 
 });
