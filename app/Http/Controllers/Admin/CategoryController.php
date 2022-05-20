@@ -63,9 +63,26 @@ class CategoryController extends Controller
             if ($data['category_discount'] == "") {
                 $data['category_discount'] = 0;
             }
-            // echo "<pre>";
-            // print_r($data);
-            // die;
+
+
+
+            $rules = [
+                'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'section_id' => 'required',
+                'url' => 'required',
+            ];
+
+
+            $customMessages = [
+                'category_name.required' => 'Category Name field is required',
+                'category_name.regex' => 'Valid Category Name is required',
+                'section_id.required' => 'Section Name is required',
+                'url.required' => 'Category URL is required',
+
+            ];
+
+            $this->validate($request, $rules, $customMessages);
+
 
             // Upload Admin Photo
             // if ($request->hasFile('category_image')) {
