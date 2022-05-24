@@ -153,4 +153,32 @@ class CategoryController extends Controller
             // return response()->json(array('msg' => $msg), 200);
         }
     }
+
+    public function deleteCategory($id)
+    {
+        // Delete Category based on id
+        Category::where('id', $id)->delete();
+        $message = "Category has been deleted successfully";
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function deleteCategoryImage($id)
+    {
+        // Get Category Image
+        $categoryImage = Category::select('category_image')->where('id', $id)->first();
+
+        // Get Category Image Path
+        $categoryImagePath = 'front/images/category_images/' . $categoryImage->category_image;
+
+        // Delete Category Image from path if exists
+        if (file_exists($categoryImagePath)) {
+            unlink($categoryImagePath);
+        }
+
+        // Delete category_image from database
+        Category::where('id', $id)->update(["category_image" => ""]);
+
+        $message = "Category Image has been deleted successfully";
+        return redirect()->back()->with('success_message', $message);
+    }
 }
