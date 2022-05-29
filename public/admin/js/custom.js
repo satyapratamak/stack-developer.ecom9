@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     // call datatables
     $('#sections').DataTable();
+    $('#brands').DataTable();
     $('#categories').DataTable();
 
 
@@ -179,6 +180,37 @@ $(document).ready(function () {
                 }else if(resp['status'] == 1){
                     alert("This user is now Active");
                     $("#category-"+category_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
+                    
+                }
+
+            },
+            error: function(){
+                alert("Error happen..Please refresh the page and do it again..");
+            },
+
+        });
+    });
+
+    // Update Brand Status
+    $(document).on("click",".updateBrandStatus", function(){
+        let status = $(this).children("i").attr("status");
+        let brand_id = $(this).attr("brand_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "/admin/update-brand-status",
+            data: {status:status, brand_id:brand_id},
+            success: function(resp){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    alert("This user is now InActive");
+                    $("#brand-"+brand_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-outline' status='InActive'> </i>");
+                    
+                }else if(resp['status'] == 1){
+                    alert("This user is now Active");
+                    $("#brand-"+brand_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
                     
                 }
 

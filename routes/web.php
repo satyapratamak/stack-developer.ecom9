@@ -81,5 +81,21 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('append-categories-level', 'CategoryController@appendCategoriesLevel');
         Route::get('delete-category/{id}', 'CategoryController@deleteCategory');
         Route::get('delete-category-image/{id}', 'CategoryController@deleteCategoryImage');
+
+        /** BRANDS **/
+        Route::get('brands', 'BrandController@brands');
+        // Update Brand Status
+        Route::post('update-brand-status', 'BrandController@updateBrandStatus');
+        // Delete Brands
+        Route::get(
+            'delete-brand/{id}',
+            'BrandController@deleteBrand'
+        );
+
+        // Add and Delete sections
+        //Route::match(['get', 'post'], 'add-edit-section/{id}', 'SectionController@addEditSection');
+        Route::match(['get', 'post'], 'add-edit-brand/{id?}', 'BrandController@addEditBrand');
+        //Route::match(['get', 'post'], 'add-edit-section/{id}', 'SectionController@addEditSection');
+        Route::match(['get', 'post'], 'add-brands/', 'BrandController@addBrand');
     });
 });

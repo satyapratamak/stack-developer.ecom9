@@ -169,7 +169,7 @@
                     @else
                       style="background:#fff  !important; color:#4B49AC!important;"
                     @endif
-                  class="nav-link" href="{{ url('admin/categories') }}">Brands</a>
+                  class="nav-link" href="{{ url('admin/brands') }}">Brands</a>
                 </li>
                 <li class="nav-item"> 
                   <a 
