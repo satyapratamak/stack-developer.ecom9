@@ -92,10 +92,21 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
             'BrandController@deleteBrand'
         );
 
-        // Add and Delete sections
+        // Add and Delete Brand
         //Route::match(['get', 'post'], 'add-edit-section/{id}', 'SectionController@addEditSection');
         Route::match(['get', 'post'], 'add-edit-brand/{id?}', 'BrandController@addEditBrand');
         //Route::match(['get', 'post'], 'add-edit-section/{id}', 'SectionController@addEditSection');
         Route::match(['get', 'post'], 'add-brands/', 'BrandController@addBrand');
+
+
+        /** PRODUCTS **/
+        Route::get('products', 'ProductsController@products');
+        // Update Product Status
+        Route::post('update-product-status', 'ProductsController@updateProductStatus');
+        // Delete Product
+        Route::get(
+            'delete-product/{id}',
+            'ProductsController@deleteProduct'
+        );
     });
 });
