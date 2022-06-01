@@ -108,5 +108,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
             'delete-product/{id}',
             'ProductsController@deleteProduct'
         );
+
+        // Add and Delete Product
+        //Route::match(['get', 'post'], 'add-edit-section/{id}', 'SectionController@addEditSection');
+        Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductsController@addEditProduct');
+        //Route::match(['get', 'post'], 'add-edit-section/{id}', 'SectionController@addEditSection');
+        Route::match(['get', 'post'], 'add-brands/', 'BrandController@addBrand');
     });
 });

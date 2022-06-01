@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -48,5 +50,20 @@ class ProductsController extends Controller
         Product::where('id', $id)->delete();
         $message = "Product has been deleted successfully";
         return redirect()->back()->with('success_message', $message);
+    }
+
+    public function addEditProduct(Request $request, $id = null)
+    {
+        if ($id == "") {
+            $title = "Add Product";
+        } else {
+            $title = "Edit Product";
+        }
+
+        // Get Section with Categories and Sub Categories
+        $categories = Section::with('categories')->get()->toArray();
+        //dd($categories);
+        $brands = Brand::where('status', 1)->get()->toArray();
+        return view('admin.products.add_edit_product')->with(compact('title', 'categories', 'brands'));
     }
 }
