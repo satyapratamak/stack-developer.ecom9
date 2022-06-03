@@ -46,6 +46,10 @@
                           </th> 
 
                           <th>
+                            Product Image
+                          </th>
+
+                          <th>
                             Section
                           </th> 
 
@@ -83,6 +87,14 @@
 
                           <td>
                             {{ $product['product_color']}}
+                          </td>
+
+                          <td>
+                            @if(!empty($product['product_image']))
+                              <img style="width:120px; height:120px;" src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}">
+                            @else
+                              <img style="width:120px; height:120px;" src="{{ asset('front/images/product_images/small/no-image.png') }}">
+                            @endif
                           </td>
 
                           <td>
