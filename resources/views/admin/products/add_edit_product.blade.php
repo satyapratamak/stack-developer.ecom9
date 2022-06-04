@@ -92,14 +92,21 @@
                     
                     <div class="form-group">
                       <label for="category_id">Category</label>
-                      <select name="category_id" id="category_id" class="form-control" style="color:#000">
-                          <option value="">-- Select Category --</option>
+                      <select name="category_id" id="category_id" class="form-control text-dark" >                         <option value="">-- Select Category --</option>
                           @foreach ($categories as $section )
                             <optgroup label="{{ $section['name'] }}"></optgroup>
                             @foreach ( $section['categories'] as $category)
-                              <option value="{{ $category['id'] }}"> &nbsp;&nbsp;&nbsp; --&nbsp;{{ $category['category_name'] }} </option>
+                              <option value="{{ $category['id'] }}"
+                                @if(!empty($product['category_id']) && $product['category_id'] == $category['id'])
+                                  selected=""
+                                @endif
+                              > &nbsp;&nbsp;&nbsp; --&nbsp;{{ $category['category_name'] }} </option>
                               @foreach ($category['sub_categories'] as $sub_category )
-                                  <option value="{{ $sub_category['id'] }}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;{{ $sub_category['category_name'] }} </option>
+                                  <option value="{{ $sub_category['id'] }}"
+                                  @if(!empty($product['category_id']) && $product['category_id'] == $sub_category['id'])
+                                    selected=""
+                                  @endif
+                                  > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;{{ $sub_category['category_name'] }} </option>
                               @endforeach
                             @endforeach  
                           @endforeach
@@ -108,10 +115,15 @@
 
                     <div class="form-group">
                       <label for="brand_id">Brand Name</label>
-                      <select name="brand_id" id="brand_id" class="form-control" style="color:#000">
+                      <select name="brand_id" id="brand_id" class="form-control text-dark">
                           <option value="">-- Select Brand --</option>
                           @foreach ($brands as $brand )
-                            <option value="{{ $brand['id']}}"> {{ $brand['name'] }}</option>
+                            <option value="{{ $brand['id']}}"
+                              @if(!empty($product['brand_id']) && $product['brand_id'] == $brand['id'])
+                                selected=""
+                              @endif
+                            
+                            > {{ $brand['name'] }}</option>
                              
                           @endforeach
                       </select>                      
@@ -198,7 +210,7 @@
                       <label for="product_image">Product Image (Recommend size 1000x1000)</label>
                       <input type="file" class="form-control" id="product_image" name="product_image" />
                       @if (!empty($product['product_image']))
-                        <a href=" {{ url('front/images/product_images/'.$product['product_image']) }}" >View Image</a>&nbsp;|&nbsp;
+                        <a href=" {{ url('front/images/product_images/medium/'.$product['product_image']) }}" >View Image</a>&nbsp;|&nbsp;
                         <a href="javascript:void(0)" class="confirmDelete" module="product-image" moduleid="{{ $product['id'] }}">
                           Delete Image
                         </a> 
@@ -222,7 +234,7 @@
 
                     <div class="form-group">
                       <label for="description">Description</label>
-                      <textarea class="form-control" id="description"  name="description" rows="3" placeholder="Please enter Description"></textarea>
+                      <textarea class="form-control" id="description"  name="description" rows="3" placeholder="Please enter Description">{{ $product['description'] }}</textarea>
                     </div>
 
                     <div class="form-group">

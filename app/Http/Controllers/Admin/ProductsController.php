@@ -10,12 +10,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 
 class ProductsController extends Controller
 {
     //
     public function products()
     {
+        Session::put('page', 'products');
         $products = Product::with(
             [
                 'section' => function ($query) {
@@ -57,12 +59,15 @@ class ProductsController extends Controller
 
     public function addEditProduct(Request $request, $id = null)
     {
+        Session::put('page', 'products');
         if ($id == "") {
             $title = "Add Product";
             $product = new Product;
             $message = "Product added successfully";
         } else {
             $title = "Edit Product";
+            $product = Product::find($id);
+            $message = "Product edited successfully";
         }
 
         if ($request->isMethod('POST')) {
@@ -187,6 +192,61 @@ class ProductsController extends Controller
         $categories = Section::with('categories')->get()->toArray();
         //dd($categories);
         $brands = Brand::where('status', 1)->get()->toArray();
-        return view('admin.products.add_edit_product')->with(compact('title', 'categories', 'brands'));
+        return view('admin.products.add_edit_product')->with(compact('title', 'categories', 'brands', 'product'));
+    }
+
+    public function deleteProductImage($id)
+    {
+        //Get Product Image Name
+        $productImage = Product::select('product_image')->where('id', $id)->first();
+
+        // Get Product Image Path
+        $small_image_path = 'front/images/product_images/small/';
+        $medium_image_path = 'front/images/product_images/medium/';
+        $large_image_path = 'front/images/product_images/large/';
+
+        // Delete Small Product Image in Small folder
+        if (file_exists($small_image_path . $productImage->product_image)) {
+            unlink($small_image_path . $productImage->product_image);
+        }
+
+        // Delete Medium Product Image in medium folder
+        if (file_exists($medium_image_path . $productImage->product_image)) {
+            unlink($medium_image_path . $productImage->product_image);
+        }
+
+        // Delete Large Product Image in large folder
+        if (file_exists($large_image_path . $productImage->product_image)) {
+            unlink($large_image_path . $productImage->product_image);
+        }
+
+        //Delete PRoduct Image Name from products tables
+        Product::where('id', $id)->update(['product_image' => '']);
+
+        $message = "Product Image has been deleted successfully";
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function deleteProductVideo($id)
+    {
+        //Get Product Image Name
+        $productVideo = Product::select('product_video')->where('id', $id)->first();
+
+        // Get Product Video Path
+        $video_path = 'front/videos/product_videos/';
+
+
+        // Delete Small Product Image in Small folder
+        if (file_exists($video_path . $productVideo->product_video)) {
+            unlink($video_path . $productVideo->product_video);
+        }
+
+
+
+        //Delete PRoduct Image Name from products tables
+        Product::where('id', $id)->update(['product_video' => '']);
+
+        $message = "Product Video has been deleted successfully";
+        return redirect()->back()->with('success_message', $message);
     }
 }
