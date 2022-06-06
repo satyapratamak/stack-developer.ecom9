@@ -136,9 +136,11 @@
                                 <i style="font-size:25px" class="mdi mdi-pencil-box"> </i>
                               </a>
 
-                              {{-- <a title="Section" class="confirmDelete" href="{{ url('admin/delete-section/'.$section['id']) }}">
-                                <i style="font-size:25px" class="mdi mdi-file-excel-box"> </i>
-                              </a> --}}
+                              <a href="{{ url('admin/add-edit-attributes/'.$product['id']) }}">
+                                <i style="font-size:25px" class="mdi mdi-plus-box"> </i>
+                              </a>
+
+                              
                               <a href="javascript:void(0)" class="confirmDelete" module="product" moduleid="{{ $product['id'] }}">
                                 <i style="font-size:25px" class="mdi mdi-file-excel-box"> </i>
                               </a> 
