@@ -18,4 +18,10 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
+
+    public function attributes()
+    {
+        // relation 1 product have many attributes
+        return $this->hasMany('App\Models\ProductsAttributes', 'product_id', 'id');
+    }
 }

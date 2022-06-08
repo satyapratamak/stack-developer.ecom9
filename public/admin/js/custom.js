@@ -4,7 +4,8 @@ $(document).ready(function () {
     $('#sections').DataTable();
     $('#brands').DataTable();
     $('#categories').DataTable();
-    $('products').DataTable();
+    $('#products').DataTable();
+    $('#attributes').DataTable();
 
 
     $('.nav-item').removeClass('active');

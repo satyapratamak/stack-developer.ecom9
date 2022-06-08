@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Section;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\ProductsAttributes;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -250,18 +251,49 @@ class ProductsController extends Controller
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function addAttributes(Request $request, $id){
-        $product = Product::find($id);
+    public function addAttributes(Request $request, $id)
+    {
+        $product = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_price', 'product_image')->with('attributes')->find($id)->toArray();
+        //dd($product);
 
-        if ($request->isMethod('GET')){
+        if ($request->isMethod('GET')) {
             $title = 'Add Attributes';
-        }else{
+        } else {
             $title = 'Edit Attributes';
             $data = $request->all();
-            echo"<pre>"; print_r($data); die;
+            // echo "<pre>";
+            // print_r($data);
+            // die;
+
+            foreach ($data['sku'] as $key => $value) {
+                if (!empty($value)) {
+
+                    // SKU Duplication Check
+                    $skuCount = ProductsAttributes::where('sku', $value)->count();
+                    if ($skuCount > 0) {
+                        return redirect()->back()->with('error_message', 'SKU Already Exists! Please add anoter SKU');
+                    }
+
+                    // Size Duplication Check
+                    $sizeCount = ProductsAttributes::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
+                    if ($sizeCount > 0) {
+                        return redirect()->back()->with('error_message', 'Size Already Exists! Please add anoter Size');
+                    }
+
+                    $attribute = new ProductsAttributes;
+                    $attribute->product_id = $id;
+                    $attribute->sku = $value;
+                    $attribute->size = $data['size'][$key];
+                    $attribute->price = $data['price'][$key];
+                    $attribute->stock = $data['stock'][$key];
+                    $attribute->status = 1;
+                    $attribute->save();
+                }
+            }
+            return redirect()->back()->with('success_message', 'Product Atrributes have been added successfully');
         }
 
-        
+
         return view('admin.attributes.add_edit_attributes')->with(compact('product', 'title'));
     }
 }

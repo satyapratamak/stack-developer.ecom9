@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-       <div class="row">
+        <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -70,8 +70,8 @@
                             </button>
                         
                         </div>
-                    @endif
-                  
+                  @endif
+            
                   <form class="forms-sample" 
                  
                     action="{{ url('/admin/add-edit-attributes/'.$product['id']) }}"
@@ -105,19 +105,7 @@
                       <label for="product_price">Product Price</label>
                       <input type="text" class="form-control"                     
                         value="{{ $product['product_price'] }}" disabled="">
-                    </div>
-
-                    <div class="form-group">
-                      <label for="product_discount">Product Discount (%)</label>
-                      <input type="text" class="form-control"                     
-                        value="{{ $product['product_discount'] }}" disabled="">
-                    </div>
-
-                    <div class="form-group">
-                      <label for="product_weight">Product Weight</label>
-                      <input type="text" class="form-control"                     
-                        value="{{ $product['product_weight'] }}" disabled="">
-                    </div>
+                    </div>                   
 
                     <div class="form-group">
                       <label for="product_image">Product Image</label>
@@ -129,24 +117,6 @@
                       @endif
                     </div>
 
-                    {{-- <div class="form-group">
-                      <label for="product_video">Product Video (Recommend Size : Less than 2 MB)</label>
-                      <input type="file" class="form-control" id="product_video" name="product_video" />
-                      @if (!empty($product['product_video']))
-                        <a href=" {{ url('front/videos/product_videos/'.$product['product_video']) }}" >View Video</a>&nbsp;|&nbsp;
-                        <a href="javascript:void(0)" class="confirmDelete" module="product-video" moduleid="{{ $product['id'] }}">
-                          Delete Video
-                        </a> 
-                        
-                      @endif
-                    </div> --}}
-
-                    
-
-                    <div class="form-group">
-                      <label for="description">Description</label>
-                      <textarea disabled class="form-control" id="description"  name="description" rows="3">{{ $product['description'] }}</textarea>
-                    </div>
                     <div class="form-group">
                       <label for="product_weight">Attributes</label>
                       <div class="field_wrapper">
@@ -164,11 +134,94 @@
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
                   </form>
+                  <br>
+                  <h4 class="card-title">Product Attributes</h4>
+                  <div class="table-responsive pt-3">
+                  <table id="attributes" class="table table-bordered">
+                          <thead>
+                      <tr>
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Size
+                        </th>
+
+                        <th>
+                          SKU
+                        </th>
+
+                        <th>
+                          Price
+                        </th> 
+
+                        <th>
+                          Stock
+                        </th>
+                        
+                        <th>
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                          <tbody>
+                      @foreach ($product['attributes'] as $attributes)
+                      
+                      
+                      <tr>
+                        <td>
+                          {{ $attributes['id'] }}
+                        </td>
+                        <td>
+                            {{ $attributes['size'] }}
+                        </td>
+
+                        <td>
+                          {{ $attributes['sku']}}
+                        </td>
+
+                        <td>
+                          {{ $attributes['price']}}
+                        </td>
+                        
+
+                        <td>
+                          {{ $attributes['stock']}}
+                        </td>              
+                                            
+                        <td>
+                          
+                            <a href="{{ url('admin/add-edit-product/'.$product['id']) }}">
+                              <i style="font-size:25px" class="mdi mdi-pencil-box"> </i>
+                            </a>
+
+                            <a href="{{ url('admin/add-edit-attributes/'.$product['id']) }}">
+                              <i style="font-size:25px" class="mdi mdi-plus-box"> </i>
+                            </a>
+                            
+                            <a href="javascript:void(0)" class="confirmDelete" module="product" moduleid="{{ $product['id'] }}">
+                              <i style="font-size:25px" class="mdi mdi-file-excel-box"> </i>
+                            </a> 
+                          
+                        </td>
+                        
+                      </tr>
+                      @endforeach
+                      
+                    </tbody>
+                        </table>
+                      </div>
+                </div>
+              
+              
                 </div>
               </div>
-            </div>     
             
-          </div>
+            
+            
+            
+       
+       </div>
     </div>
     <!-- content-wrapper ends -->
     
