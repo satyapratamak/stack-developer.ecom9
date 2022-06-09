@@ -255,6 +255,37 @@ $(document).ready(function () {
         });
     });
 
+    // Update Product Status
+    $(document).on("click",".updateAttributesStatus", function(){
+        let status = $(this).children("i").attr("status");
+        let attributes_id = $(this).attr("attributes_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "/admin/update-attributes-status",
+            data: {status:status, attributes_id:attributes_id},
+            success: function(resp){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    alert("This user is now InActive");
+                    $("#attributes-"+attributes_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-outline' status='InActive'> </i>");
+                    
+                }else if(resp['status'] == 1){
+                    alert("This user is now Active");
+                    $("#attributes-"+attributes_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
+                    
+                }
+
+            },
+            error: function(){
+                alert("Error happen..Please refresh the page and do it again..");
+            },
+
+        });
+    });
+
     // Add Remove Attributes
     
     var maxField = 10; //Input fields increment limitation

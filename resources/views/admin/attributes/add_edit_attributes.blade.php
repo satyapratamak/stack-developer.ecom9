@@ -137,7 +137,10 @@
                   <br>
                   <h4 class="card-title">Product Attributes</h4>
                   <div class="table-responsive pt-3">
-                  <table id="attributes" class="table table-bordered">
+                  <form class="forms-sample" 
+                          action="{{ url('/admin/edit-attributes/'.$product['id']) }}"
+                          method="post" name="editAttributesForm" id="editAttributesForm" enctype="multipart/form-data"> @csrf
+                    <table id="attributes" class="table table-bordered">
                           <thead>
                       <tr>
                         <th>
@@ -158,6 +161,10 @@
                         <th>
                           Stock
                         </th>
+
+                        <th>
+                          Status
+                        </th>
                         
                         <th>
                           Actions
@@ -166,28 +173,51 @@
                     </thead>
                           <tbody>
                       @foreach ($product['attributes'] as $attributes)
-                      
-                      
+                            
                       <tr>
                         <td>
                           {{ $attributes['id'] }}
+                          <input type="hidden" value="{{ $attributes['id'] }}" id="attributeId" name="attributeId[]">
                         </td>
                         <td>
-                            {{ $attributes['size'] }}
+                            
+
+                            <input type="text" class="form-control"                            
+                                value="{{ $attributes['size'] }}" id="size" name="size[]" style="width:125px;">
                         </td>
 
                         <td>
-                          {{ $attributes['sku']}}
+                          
+                          <input type="text" class="form-control"                            
+                                value="{{ $attributes['sku'] }}" id="sku" name="sku[]" style="width:125px;">
                         </td>
 
                         <td>
-                          {{ $attributes['price']}}
+                          
+                          <input type="number" class="form-control"                            
+                                value="{{ $attributes['price'] }}" id="price" name="price[]" style="width:125px;">
                         </td>
                         
 
                         <td>
-                          {{ $attributes['stock']}}
-                        </td>              
+                         
+                          <input type="number" class="form-control"                            
+                                value="{{ $attributes['stock'] }}" id="stock" name="stock[]" style="width:125px;">
+                        </td>
+                        
+                        <td>
+                            @if($attributes['status'] == 1)
+
+                              <a class="updateAttributesStatus" id="attributes-{{ $attributes['id'] }}" attributes_id ="{{ $attributes['id'] }}" href="javascript:void(0)">
+                                <i style="font-size:25px" class="mdi mdi-bookmark-check" status="Active"> </i>
+                              </a>
+                            @else
+                              <a class="updateAttributesStatus" id="attributes-{{ $attributes['id'] }}" attributes_id ="{{ $attributes['id'] }}" href="javascript:void(0)">
+                                <i style="font-size:25px" class="mdi mdi-bookmark-outline" status="InActive"> </i>
+                              </a>
+                            @endif
+                            
+                          </td>
                                             
                         <td>
                           
@@ -206,10 +236,13 @@
                         </td>
                         
                       </tr>
+                      
                       @endforeach
                       
                     </tbody>
                         </table>
+                        <button type="submit" class="btn btn-primary"> Update Attributes </button>
+                        </form>
                       </div>
                 </div>
               

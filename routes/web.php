@@ -116,7 +116,14 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get', 'post'], 'add-brands/', 'BrandController@addBrand');
         Route::get('delete-product-image/{id}', 'ProductsController@deleteProductImage');
         Route::get('delete-product-video/{id}', 'ProductsController@deleteProductVideo');
-        Route::match(['get', 'post'], 'add-edit-attributes/{id}', 'ProductsController@addAttributes');
+
+        /** PRODUCT ATTRIBUTES **/
         // Product Attributes
+        Route::match(['get', 'post'], 'add-edit-attributes/{id}', 'ProductsController@addAttributes');
+        // Update Product Attributes Status
+        Route::post('update-attributes-status', 'ProductsController@updateAttributesStatus');
+        // Update Product Attributes
+        //Route::match(['get', 'post'], 'edit-attributes/{id}', 'ProductsController@editAttributes');
+        Route::post('edit-attributes/{product_id}', 'ProductsController@editAttributes');
     });
 });

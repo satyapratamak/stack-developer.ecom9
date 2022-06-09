@@ -253,6 +253,7 @@ class ProductsController extends Controller
 
     public function addAttributes(Request $request, $id)
     {
+        Session::put('page', 'products');
         $product = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_price', 'product_image')->with('attributes')->find($id)->toArray();
         //dd($product);
 
@@ -295,5 +296,43 @@ class ProductsController extends Controller
 
 
         return view('admin.attributes.add_edit_attributes')->with(compact('product', 'title'));
+    }
+
+    public function updateAttributesStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            ProductsAttributes::where('id', $data['attributes_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'attributes_id' => $data['attributes_id']]);
+        }
+    }
+
+    public function editAttributes(Request $request, $product_id)
+    {
+        if ($request->isMethod('POST')) {
+
+            $data = $request->all();
+
+            // dd($data);
+
+            foreach ($data['attributeId'] as $key => $attributeid) {
+
+                $size = $data['size'][$key];
+                $sku = $data['sku'][$key];
+                $stock = $data['stock'][$key];
+                $price = $data['price'][$key];
+                ProductsAttributes::where('id', $attributeid)->where('product_id', $product_id)
+                    ->update(['size' => $size, 'price' => $price, 'sku' => $sku, 'stock' => $stock]);
+            }
+
+            return redirect()->back()->with('success_message', 'Product Atrributes have been updated successfully');
+        }
+        // get all request data
     }
 }
