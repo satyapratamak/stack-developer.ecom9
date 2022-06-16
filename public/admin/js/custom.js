@@ -255,7 +255,7 @@ $(document).ready(function () {
         });
     });
 
-    // Update Product Status
+    // Update Product Attributes Status
     $(document).on("click",".updateAttributesStatus", function(){
         let status = $(this).children("i").attr("status");
         let attributes_id = $(this).attr("attributes_id");
@@ -285,6 +285,37 @@ $(document).ready(function () {
 
         });
     });
+
+    // Update Product Images Status
+    $(document).on("click",".updateImagesStatus", function(){
+        let status = $(this).children("i").attr("status");
+        let image_id = $(this).attr("image_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "/admin/update-images-status",
+            data: {status:status, image_id:image_id},
+            success: function(resp){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    alert("This user is now InActive");
+                    $("#image-"+image_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-outline' status='InActive'> </i>");
+                    
+                }else if(resp['status'] == 1){
+                    alert("This user is now Active");
+                    $("#image-"+image_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
+                    
+                }
+
+            },
+            error: function(){
+                alert("Error happen..Please refresh the page and do it again..");
+            },
+
+        });
+    }); 
 
     // Add Remove Attributes
     

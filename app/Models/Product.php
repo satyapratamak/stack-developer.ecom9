@@ -24,4 +24,10 @@ class Product extends Model
         // relation 1 product have many attributes
         return $this->hasMany('App\Models\ProductsAttributes', 'product_id', 'id');
     }
+
+    public function images()
+    {
+        // relation 1 product have many images
+        return $this->hasMany('App\Models\ProductsImages', 'product_id', 'id');
+    }
 }

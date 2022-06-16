@@ -125,5 +125,13 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Update Product Attributes
         //Route::match(['get', 'post'], 'edit-attributes/{id}', 'ProductsController@editAttributes');
         Route::post('edit-attributes/{product_id}', 'ProductsController@editAttributes');
+
+        /** PRODUCT IMAGES **/
+        // Add Product Images
+        Route::match(['get', 'post'], 'add-images/{id}', 'ProductsController@addImages');
+        // Update Product Images Status
+        Route::post('update-images-status', 'ProductsController@updateImagesStatus');
+        // Delete Product Images
+        Route::get('delete-image/{id}', 'ProductsController@deleteImage');
     });
 });

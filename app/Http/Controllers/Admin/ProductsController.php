@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\ProductsAttributes;
+use App\Models\ProductsImages;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -334,5 +335,102 @@ class ProductsController extends Controller
             return redirect()->back()->with('success_message', 'Product Atrributes have been updated successfully');
         }
         // get all request data
+    }
+
+    public function addImages(Request $request, $id)
+    {
+        Session::put('page', 'products');
+        $product = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_price', 'product_image')->with('images')->find($id)->toArray();
+        $title = 'Add Product Images';
+
+        if ($request->isMethod('POST')) {
+            if ($request->hasFile('images')) {
+                $images = $request->file('images');
+                // echo "<pre>";
+                // print_r($images);
+                // die;
+
+                foreach ($images as $key => $image) {
+
+
+
+
+                    $image_tmp = Image::make($image);
+
+                    $image_name =
+                        $image->getClientOriginalName();
+                    // Get Image Extension
+                    $extension = $image->getClientOriginalExtension();
+
+                    // Generate File Named
+                    $imageName = explode(".", $image_name)[0] . rand(111, 99999) . '.' . $extension;
+                    $largeImagePath = 'front/images/product_images/large/' . $imageName;
+                    $mediumImagePath = 'front/images/product_images/medium/' . $imageName;
+                    $smallImagePath = 'front/images/product_images/small/' . $imageName;
+
+                    // Upload Large, Medium and Small Product Images after Resize
+                    Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);
+                    Image::make($image_tmp)->resize(500, 500)->save($mediumImagePath);
+                    Image::make($image_tmp)->resize(250, 250)->save($smallImagePath);
+
+                    $productsImages = new ProductsImages;
+                    $productsImages->image = $imageName;
+                    $productsImages->product_id = $id;
+                    $productsImages->status = 1;
+                    $productsImages->save();
+                }
+
+                return redirect()->back()->with('success_message', 'Product Images have been added successfully');
+            }
+        }
+
+        return view('admin.images.add_images')->with(compact('product', 'title'));
+    }
+
+    public function updateImagesStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            ProductsImages::where('id', $data['image_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'image_id' => $data['image_id']]);
+        }
+    }
+
+    public function deleteImage($id)
+    {
+        //Get Product Image Name
+        $productImage = ProductsImages::select('image')->where('id', $id)->first();
+
+        // Get Product Image Path
+        $small_image_path = 'front/images/product_images/small/';
+        $medium_image_path = 'front/images/product_images/medium/';
+        $large_image_path = 'front/images/product_images/large/';
+
+        // Delete Small Product Image in Small folder
+        if (file_exists($small_image_path . $productImage->image)) {
+            unlink($small_image_path . $productImage->image);
+        }
+
+        // Delete Medium Product Image in medium folder
+        if (file_exists($medium_image_path . $productImage->image)) {
+            unlink($medium_image_path . $productImage->image);
+        }
+
+        // Delete Large Product Image in large folder
+        if (file_exists($large_image_path . $productImage->image)) {
+            unlink($large_image_path . $productImage->image);
+        }
+
+        //Delete PRoduct Image Name from products tables
+        ProductsImages::where('id', $id)->delete();
+
+        $message = "Product Image has been deleted successfully";
+        return redirect()->back()->with('success_message', $message);
     }
 }

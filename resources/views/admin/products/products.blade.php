@@ -132,16 +132,20 @@
                                              
                           <td>
                            
-                              <a href="{{ url('admin/add-edit-product/'.$product['id']) }}">
+                              <a title="Edit product" href="{{ url('admin/add-edit-product/'.$product['id']) }}">
                                 <i style="font-size:25px" class="mdi mdi-pencil-box"> </i>
                               </a>
 
-                              <a href="{{ url('admin/add-edit-attributes/'.$product['id']) }}">
+                              <a title="Add attributes" href="{{ url('admin/add-edit-attributes/'.$product['id']) }}">
                                 <i style="font-size:25px" class="mdi mdi-plus-box"> </i>
                               </a>
 
+                              <a title="Add multiple images" href="{{ url('admin/add-images/'.$product['id']) }}">
+                                <i style="font-size:25px" class="mdi mdi-library-plus"> </i>
+                              </a>
+
                               
-                              <a href="javascript:void(0)" class="confirmDelete" module="product" moduleid="{{ $product['id'] }}">
+                              <a title="Delete product" href="javascript:void(0)" class="confirmDelete" module="product" moduleid="{{ $product['id'] }}">
                                 <i style="font-size:25px" class="mdi mdi-file-excel-box"> </i>
                               </a> 
                             
