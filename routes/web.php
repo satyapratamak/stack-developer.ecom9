@@ -135,3 +135,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('delete-image/{id}', 'ProductsController@deleteImage');
     });
 });
+
+Route::namespace('App\Http\Controllers\Front')->group(function () {
+    Route::get('/', 'IndexController@index');
+});
