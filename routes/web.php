@@ -133,6 +133,13 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-images-status', 'ProductsController@updateImagesStatus');
         // Delete Product Images
         Route::get('delete-image/{id}', 'ProductsController@deleteImage');
+
+        /** BANNERS **/
+        Route::get('banners', 'BannersController@banners');
+        // Update Banner Status
+        Route::post('update-banner-status', 'BannersController@updateBannerStatus');
+        // Delete Banner Status
+        Route::get('delete-banner/{id}', 'BannersController@deleteBanner');
     });
 });
 

@@ -6,6 +6,7 @@ $(document).ready(function () {
     $('#categories').DataTable();
     $('#products').DataTable();
     $('#attributes').DataTable();
+    $('#banners').DataTable();
 
 
     $('.nav-item').removeClass('active');
@@ -316,6 +317,37 @@ $(document).ready(function () {
 
         });
     }); 
+
+    // Update Banner Status
+    $(document).on("click",".updateBannerStatus", function(){
+        let status = $(this).children("i").attr("status");
+        let banner_id = $(this).attr("banner_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "/admin/update-banner-status",
+            data: {status:status, banner_id:banner_id},
+            success: function(resp){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    alert("This user is now InActive");
+                    $("#banner-"+banner_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-outline' status='InActive'> </i>");
+                    
+                }else if(resp['status'] == 1){
+                    alert("This user is now Active");
+                    $("#banner-"+banner_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
+                    
+                }
+
+            },
+            error: function(){
+                alert("Error happen..Please refresh the page and do it again..");
+            },
+
+        });
+    });
 
     // Add Remove Attributes
     
