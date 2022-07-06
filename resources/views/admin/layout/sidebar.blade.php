@@ -188,12 +188,12 @@
           {{-- Banners Management --}}
           <li class="nav-item">
             <a 
-            @if (Session::get("page") == "banners" || Session::get("page") == "categories" || Session::get("page") == "products" || Session::get("page") == "brands")
+            @if (Session::get("page") == "banners" || Session::get("page") == "add-edit-banner" || Session::get("page") == "products" || Session::get("page") == "brands")
                   style="background:#4B49AC !important; color:#fff !important;"
                @endif
             class="nav-link" data-toggle="collapse" href="#ui-banners-management" aria-expanded="false" aria-controls="ui-banners-management">
               <i
-                @if (Session::get("page") == "banners" || Session::get("page") == "categories" || Session::get("page") == "products")
+                @if (Session::get("page") == "banners" || Session::get("page") == "add-edit-banner" || Session::get("page") == "products")
                   style="color:#fff !important;"
                @endif
               class="icon-columns menu-icon"></i>
@@ -204,7 +204,7 @@
               <ul class="nav flex-column sub-menu" style="background: #fff !important; color:#4B49AC !important;">
                 <li class="nav-item"> 
                   <a 
-                    @if (Session::get('page') == "banners")
+                    @if (Session::get('page') == "banners" || Session::get('page') == "add-edit-banner")
                       style="background:#4B49AC !important; color:#fff !important;"
                     @else
                       style="background:#fff  !important; color:#4B49AC!important;"
