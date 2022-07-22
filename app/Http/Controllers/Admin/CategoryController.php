@@ -38,6 +38,9 @@ class CategoryController extends Controller
 
     public function addEditCategory(Request $request, $id = null)
     {
+
+
+
         Session::put('page', 'categories');
         if ($id == "") {
             $title = "Add Category";
@@ -59,6 +62,7 @@ class CategoryController extends Controller
 
         if ($request->isMethod('POST')) {
             $data = $request->all();
+
 
             if ($data['category_discount'] == "") {
                 $data['category_discount'] = 0;

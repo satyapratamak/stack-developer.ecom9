@@ -209,7 +209,7 @@
                     @else
                       style="background:#fff  !important; color:#4B49AC!important;"
                     @endif
-                  class="nav-link" href="{{ url('admin/banners') }}">Slide Banners</a>
+                  class="nav-link" href="{{ url('admin/banners') }}">Home Page Banners</a>
                 </li>
                 {{-- <li class="nav-item"> 
                   <a 
@@ -242,15 +242,7 @@
                 
               </ul>
             </div>
-          </li>
-
-          
-
-          
-
-          
-
-          
+          </li>          
 
           @elseif (Auth::guard('admin')->user()->type == 'vendor')
 

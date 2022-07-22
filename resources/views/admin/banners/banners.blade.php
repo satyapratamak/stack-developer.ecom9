@@ -14,7 +14,7 @@
               <div class="card">
                 <div class="card-body">
                   <h3 class="font-weight-bold">BANNERS MANAGEMENT</h3>
-                  <h4 class="card-title">Banners</h4>
+                  <h4 class="card-title">Home Page Banners</h4>
                   {{-- <p class="card-description">
                     Add class <code>.table-bordered</code>
                   </p> --}}
@@ -40,6 +40,10 @@
                           </th>
                           <th>
                             Image
+                          </th>
+
+                          <th>
+                            Type
                           </th>
 
                           <th>
@@ -71,6 +75,10 @@
                           </td>
                           <td>
                              <img style="width:150px;" src={{ asset('front/images/banner_images/'.$banner['image']) }} />
+                          </td>
+
+                          <td>
+                            {{ $banner['type'] }}
                           </td>
 
                           <td>

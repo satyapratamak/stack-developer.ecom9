@@ -84,12 +84,30 @@
                   @if (empty($banner['id']))
                     action="{{ url('/admin/add-edit-banner') }}"
                   @else
-                    action="{{ url('/admin/add-edit-banner/'.$product['id']) }}"
+                    action="{{ url('/admin/add-edit-banner/'.$banner['id']) }}"
                     
                   @endif
                    method="post"
                   name="addEditBannerForm" id="addEditBannerForm" enctype="multipart/form-data"> @csrf
                     
+                    <!-- Banner Type -->
+                    <div class="form-group">
+                      <label for="link">Type</label>
+                      <select class="form-control" name="type" id="type"> 
+                        <option value=""> -- Select -- </option>
+                        <option value="Slider"
+                        @if (!empty($banner['type']) && $banner['type'] == "Slider")
+                          selected=""
+                        @endif
+                        > Slider </option>
+                        <option value="Fix"
+                        @if (!empty($banner['type']) && $banner['type'] == "Fix")
+                          selected=""
+                        @endif
+                        > Fix </option>
+                      </select>
+                    </div>
+
                     <!-- Banner Image -->
                     <div class="form-group">
                       <label for="image">Banner Image (Recommend size 1000x1000)</label>

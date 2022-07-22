@@ -61,7 +61,8 @@ class BannersController extends Controller
     {
         Session::put('page', 'add-edit-banner');
         $title = "";
-        $card_title = "BANNERS";
+        $card_title = "HOME PAGE BANNERS";
+
 
         if ($id == "") {
             $title = "Add Banners";
@@ -75,9 +76,16 @@ class BannersController extends Controller
 
         if ($request->isMethod('POST')) {
             $data = $request->all();
-            // echo "<pre>";
-            // print_r($data);
-            // die;
+
+
+            if ($data['type'] == "Slider") {
+                $image_width = 1920;
+                $image_height = 720;
+            } else  if ($data['type'] == "Fix") {
+                $image_width = 1920;
+                $image_height = 450;
+            }
+
             if ($request->hasFile('image')) {
                 $image_temp = $request->file('image');
                 if ($image_temp->isValid()) {
@@ -89,16 +97,26 @@ class BannersController extends Controller
                     $imageName = rand(111, 99999) . '.' . $extension;
                     $imagePath = 'front/images/banner_images/' . $imageName;
 
-                    Image::make($image_temp)->resize(1920, 720)->save($imagePath);
+                    Image::make($image_temp)->resize($image_width, $image_height)->save($imagePath);
                     $banner->image = $imageName;
                 }
             } else {
                 $banner->image = "";
             }
 
+            if (empty($data['link'])) {
+                $data['link'] = "";
+            }
+            if (empty($data['title'])) {
+                $data['title'] = "";
+            }
+            if (empty($data['alt'])) {
+                $data['alt'] = "";
+            }
             $banner->link = $data['link'];
             $banner->title = $data['title'];
             $banner->alt = $data['alt'];
+            $banner->type = $data['type'];
             $banner->status = 1;
 
             $banner->save();
@@ -108,6 +126,6 @@ class BannersController extends Controller
 
 
 
-        return view('admin.banners.add_edit_banner')->with(compact('title', 'card_title'));
+        return view('admin.banners.add_edit_banner')->with(compact('title', 'card_title', 'banner'));
     }
 }
