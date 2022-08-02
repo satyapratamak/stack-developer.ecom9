@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\Banner;
+use App\Models\Product;
 
 class IndexController extends Controller
 {
@@ -18,7 +19,9 @@ class IndexController extends Controller
         $sliderBanners = Banner::sliderBanners();
         $fixBanners = Banner::fixBanners();
 
+        $newLimitProducts = Product::newLimitProducts(8);
 
-        return view('front.index')->with(compact('sections', 'banners', 'sliderBanners', 'fixBanners'));
+        // dd($newLimitProducts);
+        return view('front.index')->with(compact('sections', 'banners', 'sliderBanners', 'fixBanners', 'newLimitProducts'));
     }
 }
