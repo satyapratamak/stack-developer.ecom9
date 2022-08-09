@@ -288,6 +288,18 @@
                       
                     </div> 
 
+                    <div class="form-group">
+                      <label for="is_bestseller">Best Seller Items</label>
+                      <input type="checkbox" name="is_bestseller" value="Yes" 
+                        @if(!empty($product['is_bestseller']) && $product['is_bestseller'] == 'Yes')
+                            checked="checked"                       
+                            
+                        @endif
+                        
+                      />
+                      
+                    </div> 
+
                     
                     
                     

@@ -56,4 +56,10 @@ class Product extends Model
         }
         return $discounted_price;
     }
+
+    public static function bestSellerProducts()
+    {
+        $bestSellerProducts = Product::where(['status' => 1, 'is_bestseller' => 'Yes'])->inRandomOrder()->get()->toArray();
+        return $bestSellerProducts;
+    }
 }

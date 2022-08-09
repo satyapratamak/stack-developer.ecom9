@@ -194,6 +194,12 @@ class ProductsController extends Controller
             } else {
                 $product->is_featured = "No";
             }
+
+            if (!empty($data['is_bestseller'])) {
+                $product->is_bestseller = "Yes";
+            } else {
+                $product->is_bestseller = "No";
+            }
             $product->status = 1;
             $product->save();
             return redirect('admin/products')->with('success_message', $message);
