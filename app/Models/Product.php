@@ -68,4 +68,10 @@ class Product extends Model
         $discountedProducts = Product::where('product_discount', '>', 0)->where('status', 1)->limit($limit)->inRandomOrder()->get()->toArray();
         return $discountedProducts;
     }
+
+    public static function featuredProducts()
+    {
+        $featuredProducts = Product::where(['status' => 1, 'is_featured' => 'Yes'])->inRandomOrder()->get()->toArray();
+        return $featuredProducts;
+    }
 }

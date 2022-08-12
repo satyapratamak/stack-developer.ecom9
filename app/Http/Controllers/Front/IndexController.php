@@ -22,8 +22,9 @@ class IndexController extends Controller
         $newLimitProducts = Product::newLimitProducts(8);
         $bestSellerProducts = Product::bestSellerProducts();
         $discountedProducts = Product::discountedProducts(6);
+        $featuredProducts = Product::featuredProducts();
 
         // dd($newLimitProducts);
-        return view('front.index')->with(compact('sections', 'banners', 'sliderBanners', 'fixBanners', 'newLimitProducts', 'bestSellerProducts', 'discountedProducts'));
+        return view('front.index')->with(compact('sections', 'banners', 'sliderBanners', 'fixBanners', 'newLimitProducts', 'bestSellerProducts', 'discountedProducts', 'featuredProducts'));
     }
 }
