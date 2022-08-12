@@ -111,7 +111,7 @@ $(document).ready(function () {
     // });
 
     // Confirm Deletion (SweetAlert Javascript)
-    $(".confirmDelete").click(function(){
+    $(document).on("click", ".confirmDelete", function(){
         let module = $(this).attr('module');
         let moduleid = $(this).attr('moduleid');
         
@@ -135,14 +135,35 @@ $(document).ready(function () {
             
         })
     });
+    // $(".confirmDelete").click(function(){
+    //     let module = $(this).attr('module');
+    //     let moduleid = $(this).attr('moduleid');
+        
+    //     Swal.fire({
+    //     title: 'Are you sure?',
+    //     text: "You won't be able to revert this!",
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: 'Yes, delete it!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             Swal.fire(
+    //             'Deleted!',
+    //             'Your file has been deleted.',
+    //             'success'
+    //             )
+    //             window.location = "/admin/delete-"+module+"/"+moduleid;
+    //         }
+            
+    //     })
+    // });
 
     // Append Categories Level
     $("#section_id").change(function(){
         var section_id = $(this).val();
-        // $.ajaxSetup({
-            
-        // });
-
+        
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
