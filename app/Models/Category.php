@@ -22,4 +22,15 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Category', 'parent_id')->where('status', 1);
     }
+
+    public static function categoryDetails($url)
+    {
+        $categoryDetails = Category::select('id', 'category_name', 'url')->with('subCategories')->where('url', $url)->first()->toArray();
+        $catIds = array();
+        $carIds[] = $categoryDetails['id'];
+        foreach ($categoryDetails['subCategories'] as $key => $subcat) {
+            $catIds[] = $subcat['id'];
+        }
+        $resp = array('catIds' => $catIds, 'categoryDetails' => $categoryDetails);
+    }
 }
