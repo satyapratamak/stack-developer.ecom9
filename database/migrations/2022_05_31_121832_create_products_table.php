@@ -29,7 +29,7 @@ return new class extends Migration
             $table->integer('product_weight');
             $table->string('product_image');
             $table->string('product_video');
-            $table->string('description');
+            $table->text('description');
             $table->string('meta_title');
             $table->string('meta_description');
             $table->string('meta_keywords');

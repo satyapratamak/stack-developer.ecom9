@@ -91,7 +91,7 @@
                 <div class="col-lg-3 col-md-9 col-sm-6">
                     <div class="brand-logo text-lg-center">
                         <a href="index.html">
-                            <img src="images/main-logo/stack-developers-logo.png" alt="Stack Developers" class="app-brand-logo">
+                            <img src="{{ url('front/images/main-logo/stack-developers-logo.png') }}" alt="Stack Developers" class="app-brand-logo">
                         </a>
                     </div>
                 </div>
