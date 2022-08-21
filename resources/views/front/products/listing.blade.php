@@ -11,11 +11,9 @@ use App\Models\Product;
             <ul class="bread-crumb">
                 <li class="has-separator">
                     <i class="ion ion-md-home"></i>
-                    <a href="index.html">Home</a>
+                    <a href="{{ url('/') }}">Home</a>
                 </li>
-                <li class="is-marked">
-                    <a href="listing.html">Shop</a>
-                </li>
+                <?php echo  $categoryDetails['breadcrumbs']?>
             </ul>
         </div>
     </div>
@@ -28,17 +26,16 @@ use App\Models\Product;
         <div class="shop-intro">
             <ul class="bread-crumb">
                 <li class="has-separator">
-                    <a href="index.html">Home</a>
+                    <a href="{{ url('/') }}">Home</a>
                 </li>
-                <li class="has-separator">
-                    <a href="shop-v1-root-category.html">Men Clothing </a>
-                </li>
-                <li class="is-marked">
-                    <a href="listing.html">T-Shirts</a>
-                </li>
+                <?php echo  $categoryDetails['breadcrumbs']?>
             </ul>
         </div>
         <!-- Shop-Intro /- -->
+
+        <div class="shop-intro">
+            {{ $categoryDetails['categoryDetails']['description'] }}
+        </div>
         <div class="row">
             <!-- Shop-Left-Side-Bar-Wrapper -->
             @include('front.products.filters')
@@ -71,13 +68,24 @@ use App\Models\Product;
                     </div>
                     <!-- //end Toolbar Sorter 1  -->
                     <!-- Toolbar Sorter 2  -->
-                    <div class="toolbar-sorter-2">
+                    {{-- <div class="toolbar-sorter-2">
                         <div class="select-box-wrapper">
                             <label class="sr-only" for="show-records">Show Records Per Page</label>
                             <select class="select-box" id="show-records">
                                 <option selected="selected" value="">Show: 8</option>
                                 <option value="">Show: 16</option>
                                 <option value="">Show: 28</option>
+                            </select>
+                        </div>
+                    </div> --}}
+
+                    <div class="toolbar-sorter-2">
+                        <div class="select-box-wrapper">
+                            <label class="sr-only" for="show-records">Show Records Per Page</label>
+                            <select class="select-box" id="show-records">
+                                <option selected="selected" value="">Showing : {{ count($categoryProducts) }}</option>
+                                <option value="">Showing All</option>
+                                
                             </select>
                         </div>
                     </div>
@@ -116,8 +124,11 @@ use App\Models\Product;
                                         <li class="has-separator">
                                             <a href="shop-v1-root-category.html">{{ $product['product_code'] }}</a>
                                         </li>
-                                        <li >
+                                        <li class="has-separator">
                                             <a href="listing.html">{{ $product['product_color'] }}</a>
+                                        </li>
+                                        <li >
+                                            <a href="listing.html">{{ $product['brand']['name'] }}</a>
                                         </li>
                                         {{-- <li>
                                             <a href="shop-v3-sub-sub-category.html">Hoodies</a>

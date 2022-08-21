@@ -25,17 +25,37 @@ class Category extends Model
 
     public static function categoryDetails($url)
     {
-        $categoryDetails = Category::select('id', 'category_name', 'url')->with('subCategories')->where('url', $url)->first()->toArray();
+        $categoryDetails = Category::select('id', 'parent_id', 'category_name', 'url', 'description')->with(['subCategories' => function ($query) {
+            $query->select('id', 'parent_id', 'category_name', 'url', 'description');
+        }])->where('url', $url)->first()->toArray();
 
         $catIds = array();
         $catIds[] = $categoryDetails['id'];
+
+        if ($categoryDetails['parent_id'] == 0) {
+            // Show only Main Category in Breadcrumb
+            $breadcrumbs = '<li class="is-marked">
+                    <a href="' . $categoryDetails['url'] . '">' . $categoryDetails['category_name'] . ' </a>
+                </li>';
+        } else {
+            // Show Main Category and Sub Categories in Breadcrumb
+            $parentCategory = Category::select('category_name', 'url')->where('id', $categoryDetails['parent_id'])->first()->toArray();
+            $breadcrumbs = '
+                <li class="has-separator">
+                    <a href="' . $parentCategory['url'] . '">' . $parentCategory['category_name'] . '</a>
+                </li><li class="is-marked">
+                    <a href="' . $categoryDetails['url'] . '">' . $categoryDetails['category_name'] . '</a>
+                </li>
+                
+                ';
+        }
 
 
         foreach ($categoryDetails['sub_categories'] as $key => $subcat) {
             $catIds[] = $subcat['id'];
         }
 
-        $resp = array('catIds' => $catIds, 'categoryDetails' => $categoryDetails);
+        $resp = array('catIds' => $catIds, 'categoryDetails' => $categoryDetails, 'breadcrumbs' => $breadcrumbs);
         return $resp;
     }
 }
