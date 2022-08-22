@@ -19,7 +19,8 @@ class Product extends Model
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
-    public function brand(){
+    public function brand()
+    {
         return $this->belongsTo('App\Models\Brand', 'brand_id');
     }
 
@@ -77,5 +78,18 @@ class Product extends Model
     {
         $featuredProducts = Product::where(['status' => 1, 'is_featured' => 'Yes'])->inRandomOrder()->get()->toArray();
         return $featuredProducts;
+    }
+
+    public static function isProductNew($product_id)
+    {
+        $productIds = Product::select('id')->where('status', 1)->orderby('id', 'DESC')->limit(3)->pluck('id')->all();
+        $productIds = json_decode(json_encode($productIds), true);
+        if (in_array($product_id, $productIds)) {
+            $isProductNew = true;
+        } else {
+            $isProductNew = false;
+        }
+        //dd($productIds);
+        return $isProductNew;
     }
 }

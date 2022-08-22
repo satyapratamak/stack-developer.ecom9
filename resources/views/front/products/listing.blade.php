@@ -171,23 +171,28 @@ use App\Models\Product;
                                     
                                 @endif
                             </div>
+
+                            <?php $isProductNew = Product::isProductNew($product['id']);?>
+                            @if ($isProductNew)
                             <div class="tag new">
                                 <span>NEW</span>
-                            </div>
-                            <div class="tag sale">
+                            </div>  
+                            @endif
+                            
+                            {{-- <div class="tag sale">
                                 <span>SALE</span>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>   
                     @endforeach
-                    
-                    
                 </div>
                 <!-- Row-of-Product-Container /- -->
+                <div>{{ $categoryProducts->links() }}</div>
+                <div>&nbsp; &nbsp;</div>
             </div>
             <!-- Shop-Right-Wrapper /- -->
             <!-- Shop-Pagination -->
-            <div class="pagination-area">
+            {{-- <div class="pagination-area">
                 <div class="pagination-number">
                     <ul>
                         <li style="display: none">
@@ -217,7 +222,7 @@ use App\Models\Product;
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
             <!-- Shop-Pagination /- -->
         </div>
     </div>

@@ -22,7 +22,7 @@ class ProductsController extends Controller
 
             $categoryDetails = Category::categoryDetails($url);
 
-            $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray();
+            $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->paginate(3);
             //dd($categoryDetails);
 
             return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections'));

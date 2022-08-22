@@ -21,7 +21,7 @@
 </div>
 <!-- Responsive-Search /- -->
 <!-- Newsletter-Modal -->
-<div id="newsletter-modal" class="modal fade">
+{{-- <div id="newsletter-modal" class="modal fade">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <button type="button" class="button dismiss-button ion ion-ios-close" data-dismiss="modal"></button>
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- Newsletter-Modal /- -->
 <!-- Quick-view-Modal -->
 <div id="quick-view" class="modal fade">
