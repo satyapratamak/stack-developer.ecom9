@@ -54,18 +54,35 @@ use App\Models\Product;
                         
                     </div>
                     <!-- Toolbar Sorter 1  -->
+                    <form name="sortProducts" id="sortProducts">
                     <div class="toolbar-sorter">
                         <div class="select-box-wrapper">
                             <label class="sr-only" for="sort-by">Sort By</label>
-                            <select class="select-box" id="sort-by">
-                                <option selected="selected" value="">Sort By: Best Selling</option>
-                                <option value="">Sort By: Latest</option>
-                                <option value="">Sort By: Lowest Price</option>
-                                <option value="">Sort By: Highest Price</option>
-                                <option value="">Sort By: Best Rating</option>
+                            <select name="sort" class="select-box" id="sort">
+                                {{-- <option selected="selected" value="">Sort By: Best Selling</option> --}}
+                                <option @if(!isset($_GET['sort']) || $_GET['sort'] == "")
+                                            selected='selected'
+                                        @endif value=""> -- Select --</option>
+                                <option @if(isset($_GET['sort'])  && $_GET['sort'] == "product_latest") 
+                                            selected='selected'
+                                        @endif value="product_latest">Sort By: Latest</option>
+                                <option @if(isset($_GET['sort'])  && $_GET['sort'] == "price_lowest")
+                                            selected='selected'
+                                        @endif value="price_lowest">Sort By: Lowest Price</option>
+                                <option @if(isset($_GET['sort'])  && $_GET['sort'] == "price_highest")
+                                            selected='selected'
+                                        @endif value="price_highest">Sort By: Highest Price</option>
+                                <option  @if(isset($_GET['sort'])  && $_GET['sort'] == "name_a_z")
+                                            selected='selected'
+                                        @endif value="name_a_z">Sort By: Name A-Z</option>
+                                <option  @if(isset($_GET['sort'])  && $_GET['sort'] == "name_z_a")
+                                            selected='selected'
+                                        @endif value="name_z_a">Sort By: Name Z-A</option>
+                                {{-- <option value="">Sort By: Best Rating</option> --}}
                             </select>
                         </div>
                     </div>
+                    </form>
                     <!-- //end Toolbar Sorter 1  -->
                     <!-- Toolbar Sorter 2  -->
                     {{-- <div class="toolbar-sorter-2">
@@ -187,7 +204,11 @@ use App\Models\Product;
                     @endforeach
                 </div>
                 <!-- Row-of-Product-Container /- -->
+                @if(isset($_GET['sort']))
+                <div>{{ $categoryProducts->appends(['sort'=>$_GET['sort']])->links() }}</div>
+                @else
                 <div>{{ $categoryProducts->links() }}</div>
+                @endif
                 <div>&nbsp; &nbsp;</div>
             </div>
             <!-- Shop-Right-Wrapper /- -->
