@@ -117,9 +117,10 @@ ga('send', 'pageview')
 <script type="text/javascript" src="{{url('front/js/jquery.custom-countdown.min.js')}}"></script>
 <!-- Owl Carousel -->
 <script type="text/javascript" src="{{url('front/js/owl.carousel.min.js')}}"></script>
-<!-- Main -->
-<script type="text/javascript" src="{{url('front/js/app.js')}}"></script>
 <!-- Custom -->
 <script type="text/javascript" src="{{url('front/js/custom.js')}}"></script>
+<!-- Main -->
+<script type="text/javascript" src="{{url('front/js/app.js')}}"></script>
+
 </body>
 </html>
