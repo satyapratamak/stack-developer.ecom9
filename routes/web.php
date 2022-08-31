@@ -147,11 +147,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 });
 
 Route::namespace('App\Http\Controllers\Front')->group(function () {
-    Route::get('/', 'IndexController@index');
+    Route::match(['get', 'post'], '/', 'IndexController@index');
 
     $catUrls = Category::select('url')->where('status', 1)->get()->pluck('url')->toArray();
 
     foreach ($catUrls as $key => $url) {
-        Route::get('/' . $url, 'ProductsController@listing');
+        Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing');
     }
 });
