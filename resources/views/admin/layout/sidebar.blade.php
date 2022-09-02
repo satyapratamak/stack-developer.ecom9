@@ -242,7 +242,47 @@
                 
               </ul>
             </div>
-          </li>          
+          </li>  
+          
+          {{-- Product Filters Management --}}
+          <li class="nav-item">
+            <a 
+            @if (Session::get("page") == "filters" || Session::get("page") == "add-edit-filters" || Session::get("page") == "filters-values")
+                  style="background:#4B49AC !important; color:#fff !important;"
+               @endif
+            class="nav-link" data-toggle="collapse" href="#ui-filters-management" aria-expanded="false" aria-controls="ui-filters-management">
+              <i
+                @if (Session::get("page") == "filters" || Session::get("page") == "add-edit-filters" || Session::get("page") == "filters-values")
+                  style="color:#fff !important;"
+               @endif
+              class="icon-columns menu-icon"></i>
+              <span class="menu-title">Filters Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-filters-management">
+              <ul class="nav flex-column sub-menu" style="background: #fff !important; color:#4B49AC !important;">
+                <li class="nav-item"> 
+                  <a 
+                    @if (Session::get("page") == "filters" || Session::get("page") == "add-edit-filters")
+                      style="background:#4B49AC !important; color:#fff !important;"
+                    @else
+                      style="background:#fff  !important; color:#4B49AC!important;"
+                    @endif
+                  class="nav-link" href="{{ url('admin/filters') }}">Product Filters</a>
+                  <a 
+                    @if (Session::get("page") == "filters-values")
+                      style="background:#4B49AC !important; color:#fff !important;"
+                    @else
+                      style="background:#fff  !important; color:#4B49AC!important;"
+                    @endif
+                  class="nav-link" href="{{ url('admin/filters-values') }}">Product Filters Values</a>
+                </li>
+                
+                
+              </ul>
+            </div>
+          </li> 
+
 
           @elseif (Auth::guard('admin')->user()->type == 'vendor')
 

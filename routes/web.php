@@ -135,6 +135,12 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Delete Product Images
         Route::get('delete-image/{id}', 'ProductsController@deleteImage');
 
+        /** PRODUCT FILTERS **/
+        Route::get('filters', 'ProductFiltersController@filters');
+        Route::get('filters-values', 'ProductFiltersController@filtersValues');
+        Route::post('update-filters-status', 'ProductFiltersController@updateFiltersStatus');
+        Route::post('update-filters-values-status', 'ProductFiltersController@updateFiltersValuesStatus');
+
         /** BANNERS **/
         Route::get('banners', 'BannersController@banners');
         // Update Banner Status

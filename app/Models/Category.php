@@ -58,4 +58,10 @@ class Category extends Model
         $resp = array('catIds' => $catIds, 'categoryDetails' => $categoryDetails, 'breadcrumbs' => $breadcrumbs);
         return $resp;
     }
+
+    public static function getCategoryName($category_id)
+    {
+        $getCategoryName = Category::select('category_name')->where('id', $category_id)->first();
+        return $getCategoryName->category_name;
+    }
 }

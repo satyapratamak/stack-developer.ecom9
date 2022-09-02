@@ -7,6 +7,8 @@ $(document).ready(function () {
     $('#products').DataTable();
     $('#attributes').DataTable();
     $('#banners').DataTable();
+    $('#attributes').DataTable();
+    $('#filters').DataTable();
 
 
     $('.nav-item').removeClass('active');
@@ -359,6 +361,68 @@ $(document).ready(function () {
                 }else if(resp['status'] == 1){
                     alert("This user is now Active");
                     $("#banner-"+banner_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
+                    
+                }
+
+            },
+            error: function(){
+                alert("Error happen..Please refresh the page and do it again..");
+            },
+
+        });
+    });
+
+    // Update Product Filters Status
+    $(document).on("click",".updateFilterStatus", function(){
+        let status = $(this).children("i").attr("status");
+        let filter_id = $(this).attr("filter_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "/admin/update-filters-status",
+            data: {status:status, filter_id:filter_id},
+            success: function(resp){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    alert("This user is now InActive");
+                    $("#filter-"+filter_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-outline' status='InActive'> </i>");
+                    
+                }else if(resp['status'] == 1){
+                    alert("This user is now Active");
+                    $("#filter-"+filter_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
+                    
+                }
+
+            },
+            error: function(){
+                alert("Error happen..Please refresh the page and do it again..");
+            },
+
+        });
+    });
+
+    // Update Product Filters Values Status
+    $(document).on("click",".updateFilterValuesStatus", function(){
+        let status = $(this).children("i").attr("status");
+        let filter_values_id = $(this).attr("filter_values_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "/admin/update-filters-values-status",
+            data: {status:status, filter_values_id:filter_values_id},
+            success: function(resp){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    alert("This user is now InActive");
+                    $("#filter-values-"+filter_values_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-outline' status='InActive'> </i>");
+                    
+                }else if(resp['status'] == 1){
+                    alert("This user is now Active");
+                    $("#filter-values-"+filter_values_id).html("<i style='font-size:25px' class='mdi mdi-bookmark-check' status='Active'> </i>");
                     
                 }
 
