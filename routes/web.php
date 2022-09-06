@@ -140,6 +140,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('filters-values', 'ProductFiltersController@filtersValues');
         Route::post('update-filters-status', 'ProductFiltersController@updateFiltersStatus');
         Route::post('update-filters-values-status', 'ProductFiltersController@updateFiltersValuesStatus');
+        Route::match(['get', 'post'], 'add-edit-filters/{id?}', 'ProductFiltersController@addEditFilters');
 
         /** BANNERS **/
         Route::get('banners', 'BannersController@banners');

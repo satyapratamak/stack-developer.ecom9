@@ -23,7 +23,7 @@ use App\Models\Category;
 
                   <a 
                   style="max-width:150px; float: right; display:inline-block"
-                  href="{{ url('admin/add-edit-filters')}}" class="btn btn-block btn-primary"> Add Filters</a>
+                  href="{{ url('admin/add-edit-filters/')}}" class="btn btn-block btn-primary"> Add Filters</a>
 
                   @if(Session::has('success_message'))
                   <div class="alert alert-success alert-dismissible fade show" role="alert">
