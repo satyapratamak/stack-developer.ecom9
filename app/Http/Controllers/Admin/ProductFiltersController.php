@@ -74,9 +74,7 @@ class ProductFiltersController extends Controller
 
         if ($request->isMethod('POST')) {
             $data = $request->all();
-            // echo "<pre>";
-            // print_r($data);
-            // die;
+
 
             $category_id = implode(',', $data['category_id']);
 
@@ -94,5 +92,41 @@ class ProductFiltersController extends Controller
         $categories = Section::with('categories')->get()->toArray();
 
         return view('admin.filters.add_edit_filters')->with(compact('categories', 'title', 'filter', 'message'));
+    }
+
+    public function addEditFiltersValue(Request $request, $id = null)
+    {
+        Session::put('page', 'filters-values');
+        if ($id == "") {
+            $title = "Add Filter Values";
+            $filter_values = new ProductFiltersValues();
+            $message = "Product Filter Values added successfully";
+        } else {
+            $title = "Add Filter Values";
+            $filter_values = ProductFiltersValues::find($id);
+            $message = "Product Filter Values added successfully";
+        }
+
+        if ($request->isMethod('POST')) {
+            $data = $request->all();
+
+            // echo ("<pre>");
+            // dd($data);
+            // die;
+
+
+
+            // Save to product_filter_values table
+
+            $filter_values->product_filters_id = $data['product_filters_id'];
+            $filter_values->filter_value = $data['filter_value'];
+            $filter_values->status = 1;
+            $filter_values->save();
+
+            return redirect('admin/filters-values')->with('success_message', $message);
+        }
+
+        $filters = ProductFilters::where('status', 1)->get()->toArray();
+        return view('admin.filters.add_edit_filters_value')->with(compact('filters', 'title', 'filter_values', 'message'));
     }
 }

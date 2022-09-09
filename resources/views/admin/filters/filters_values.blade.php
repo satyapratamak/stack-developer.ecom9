@@ -22,7 +22,7 @@ use App\Models\ProductFilters;
                   href="{{ url('admin/filters')}}" class="btn btn-block btn-primary"> View Filters</a>
                   <a 
                   style="max-width:150px; float: right; display:inline-block"
-                  href="{{ url('admin/add-edit-filters')}}" class="btn btn-block btn-primary"> Add Filters Value</a>
+                  href="{{ url('admin/add-edit-filters-value')}}" class="btn btn-block btn-primary"> Add Filters Value</a>
 
                   @if(Session::has('success_message'))
                   <div class="alert alert-success alert-dismissible fade show" role="alert">
