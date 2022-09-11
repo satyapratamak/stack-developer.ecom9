@@ -3,6 +3,7 @@
 
 <?php
 use App\Models\Category;
+
 ?>
 <div class="main-panel">
         <div class="content-wrapper">

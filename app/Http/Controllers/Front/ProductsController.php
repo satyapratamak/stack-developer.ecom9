@@ -8,18 +8,21 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Section;
+use App\Models\ProductFilters;
 
 class ProductsController extends Controller
 {
     //
     public function listing(Request $request)
     {
+        $productFilters = ProductFilters::productFilters();
         if ($request->ajax()) {
             $data = $request->all();
 
             $url = $data['url'];
             $_GET['sort'] = $data['sort'];
             $sections = Section::sections();
+
 
             $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
             if ($categoryCount > 0) {
@@ -44,7 +47,7 @@ class ProductsController extends Controller
 
                 $categoryProducts = $categoryProducts->paginate(3);
 
-                return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url'));
+                return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);
             }
@@ -75,7 +78,7 @@ class ProductsController extends Controller
 
                 $categoryProducts = $categoryProducts->paginate(3);
 
-                return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url'));
+                return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);
             }
