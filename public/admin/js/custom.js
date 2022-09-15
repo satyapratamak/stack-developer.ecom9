@@ -457,6 +457,24 @@ $(document).ready(function () {
         $(this).parent('div').remove(); //Remove field html
         x--; //Decrement field counter
     });
+
+    // Show filters on selection Category
+    $("#category_id").on('change', function(){
+        let category_id = $(this).val();
+        
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type : "POST",
+            url : "category-filters",
+            data : {category_id : category_id},
+            success : function(resp){
+                $(".loadFilters").html(resp.view);
+            }
+        });
+
+    });
     
 
 

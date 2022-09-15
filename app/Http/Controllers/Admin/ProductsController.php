@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Section;
 use App\Models\Category;
+use App\Models\ProductFilters;
 use Illuminate\Http\Request;
 use App\Models\ProductsAttributes;
 use App\Models\ProductsImages;
@@ -153,6 +154,15 @@ class ProductsController extends Controller
             $product->section_id = $categoryDetails['section_id'];
             $product->category_id = $data['category_id'];
             $product->brand_id = $data['brand_id'];
+
+
+            $productFilters = ProductFilters::productFilters();
+            foreach ($productFilters as $filter) {
+
+                if (isset($data[$filter['filter_column']]) && isset($filter['filter_column'])) {
+                    $product->{$filter['filter_column']} = $data[$filter['filter_column']];
+                }
+            }
 
             $product->admin_type = Auth::guard('admin')->user()->type;
 

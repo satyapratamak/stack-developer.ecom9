@@ -9,6 +9,7 @@ use App\Models\ProductFiltersValues;
 use Illuminate\Support\Facades\Session;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class ProductFiltersController extends Controller
 {
@@ -128,5 +129,17 @@ class ProductFiltersController extends Controller
 
         $filters = ProductFilters::where('status', 1)->get()->toArray();
         return view('admin.filters.add_edit_filters_value')->with(compact('filters', 'title', 'filter_values', 'message'));
+    }
+
+    public function categoryFilters(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            // echo "<pre>";
+            // print_r($data);
+            // die;
+            $category_id = $data['category_id'];
+            return response()->json(['view' => (string)View::make('admin.filters.category_filters')->with(compact('category_id'))]);
+        }
     }
 }
