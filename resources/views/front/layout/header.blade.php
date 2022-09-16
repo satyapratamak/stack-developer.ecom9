@@ -167,7 +167,7 @@
             <ul class="mini-cart-list">
                 <li class="clearfix">
                     <a href="single-product.html">
-                        <img src="images/product/product@1x.jpg" alt="Product">
+                        <img src="{{ url('front/images/product/product@1x.jpg')}} " alt="Product">
                         <span class="mini-item-name">Product name</span>
                         <span class="mini-item-price">$100.00</span>
                         <span class="mini-item-quantity"> x 1 </span>
@@ -175,7 +175,7 @@
                 </li>
                 <li class="clearfix">
                     <a href="single-product.html">
-                        <img src="images/product/product@1x.jpg" alt="Product">
+                        <img src="{{ url('front/images/product/product@1x.jpg')}} " alt="Product">
                         <span class="mini-item-name">Product name</span>
                         <span class="mini-item-price">$100.00</span>
                         <span class="mini-item-quantity"> x 1 </span>
@@ -183,7 +183,7 @@
                 </li>
                 <li class="clearfix">
                     <a href="single-product.html">
-                        <img src="images/product/product@1x.jpg" alt="Product">
+                        <img src="{{ url('front/images/product/product@1x.jpg')}} " alt="Product">
                         <span class="mini-item-name">Product name</span>
                         <span class="mini-item-price">$100.00</span>
                         <span class="mini-item-quantity"> x 1 </span>
@@ -191,7 +191,7 @@
                 </li>
                 <li class="clearfix">
                     <a href="single-product.html">
-                        <img src="images/product/product@1x.jpg" alt="Product">
+                        <img src="{{ url('front/images/product/product@1x.jpg')}} " alt="Product">
                         <span class="mini-item-name">Product name</span>
                         <span class="mini-item-price">$100.00</span>
                         <span class="mini-item-quantity"> x 1 </span>

@@ -19,7 +19,7 @@ if(isset($product['category_id'])){
                 <option value="">-- Select --</option>
                 @foreach ($filter['filter_values'] as $value)
                 <option value="{{ $value['filter_value']}}"
-                @if(isset($product[$filter['filter_column']]) && !empty($product[$filter['filter_column']]) &&  $product[$filter['filter_column']] == $value['filter_value'])
+                @if(!empty($product[$filter['filter_column']]) &&  $product[$filter['filter_column']] == $value['filter_value'])
                 selected=""
                 @endif
                 > {{ ucwords($value['filter_value'])}}</option>            

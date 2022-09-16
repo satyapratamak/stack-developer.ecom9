@@ -25,13 +25,14 @@ $(document).ready(function(){
 
         var sort = $("#sort").val();
         var url = $("#url").val();
+        var fabric = get_filters('fabric');
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url : url,
             method : "POST",
-            data : {sort : sort, url : url},
+            data : {sort : sort, url : url, fabric : fabric},
             success : function(data) {
                 $(".filter_products").html(data);
             },
@@ -42,3 +43,36 @@ $(document).ready(function(){
         });
     });
 });
+
+$('.fabric').on('click', function(){
+    var url = $("#url").val();
+    var sort = $("#sort option:selected").val();
+    var fabric = get_filters('fabric');
+    $.ajax({
+         headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        url : url,
+        method : "POST",
+        data : {
+            url : url,
+            sort : sort,
+            fabric : fabric,
+        },
+        success : function(data) {
+                $(".filter_products").html(data);
+            },
+            error : function() {
+                alert("Error");
+            }
+    });
+});
+
+function get_filters(class_name){
+    var filter = [];
+    $('.'+class_name+":checked").each(function(){
+        filter.push($(this).val());
+    });
+
+    return filter;
+}

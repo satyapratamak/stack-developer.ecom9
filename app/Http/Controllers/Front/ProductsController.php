@@ -31,6 +31,11 @@ class ProductsController extends Controller
 
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
 
+                // Checking for Fabrics
+                if (isset($data['fabric']) && !empty($data['fabric'])) {
+                    $categoryProducts->whereIn('products.fabric', $data['fabric']);
+                }
+
                 if (isset($_GET['sort']) && !empty($_GET['sort'])) {
                     if ($_GET['sort'] == "product_latest") {
                         $categoryProducts->orderby('products.id', 'DESC');
