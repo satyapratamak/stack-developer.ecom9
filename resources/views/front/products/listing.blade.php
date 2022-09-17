@@ -1,5 +1,7 @@
 <?php 
 //use App\Models\Product;
+
+
 ?>
 @extends('front.layout.layout')
 @section('content')
@@ -101,7 +103,8 @@
                         <div class="select-box-wrapper">
                             <label class="sr-only" for="show-records">Show Records Per Page</label>
                             <select class="select-box" id="show-records">
-                                <option selected="selected" value="">Showing : {{ count($categoryProducts) }}</option>
+                                {{-- <option selected="selected" value="">Showing : {{ count($categoryProducts) }}</option> --}}
+                                {{-- <option selected="selected" value="">Showing : 5</option>  --}}
                                 <option value="">Showing All</option>
                                 
                             </select>
@@ -115,11 +118,13 @@
                     @include('front.products.ajax_products_listing')
                </div>
                 <!-- Row-of-Product-Container /- -->
-                @if(isset($_GET['sort']))
+
+                {{-- @if(isset($_GET['sort']))
                 <div>{{ $categoryProducts->appends(['sort'=>$_GET['sort']])->links() }}</div>
                 @else
                 <div>{{ $categoryProducts->links() }}</div>
-                @endif
+                @endif --}}
+                
                 <div>&nbsp; &nbsp;</div>
             </div>
             <!-- Shop-Right-Wrapper /- -->

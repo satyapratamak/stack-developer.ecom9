@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Section;
 use App\Models\ProductFilters;
 
+
 class ProductsController extends Controller
 {
     //
@@ -31,10 +32,15 @@ class ProductsController extends Controller
 
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
 
-                // Checking for Fabrics
-                if (isset($data['fabric']) && !empty($data['fabric'])) {
-                    $categoryProducts->whereIn('products.fabric', $data['fabric']);
+
+                // Checking for Dynamic Filters
+                $productFilters = ProductFilters::productFilters();
+                foreach ($productFilters as $key => $filter) {
+                    if (isset($data[$filter['filter_column']]) && !empty($data[$filter['filter_column']])) {
+                        $categoryProducts->whereIn('products.' . $filter['filter_column'], $data[$filter['filter_column']]);
+                    }
                 }
+
 
                 if (isset($_GET['sort']) && !empty($_GET['sort'])) {
                     if ($_GET['sort'] == "product_latest") {
@@ -50,8 +56,8 @@ class ProductsController extends Controller
                     }
                 }
 
-                $categoryProducts = $categoryProducts->paginate(3);
-
+                //$categoryProducts = $categoryProducts->paginate(3);
+                $categoryProducts = $categoryProducts->get()->toArray();
                 return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);
@@ -81,7 +87,8 @@ class ProductsController extends Controller
                     }
                 }
 
-                $categoryProducts = $categoryProducts->paginate(3);
+                //$categoryProducts = $categoryProducts->paginate(3);
+                $categoryProducts = $categoryProducts->get()->toArray();
 
                 return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {

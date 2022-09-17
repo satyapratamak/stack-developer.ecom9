@@ -37,9 +37,9 @@
                             Product Name
                           </th>
 
-                          <th>
+                          {{-- <th>
                             Product Code
-                          </th>
+                          </th> --}}
 
                           <th>
                             Product Color
@@ -49,7 +49,7 @@
                             Product Image
                           </th>
 
-                          <th>
+                          {{-- <th>
                             Section
                           </th> 
 
@@ -59,7 +59,7 @@
                           
                           <th>
                             Added By
-                          </th>
+                          </th> --}}
                           
                           <th>
                             Status
@@ -81,9 +81,9 @@
                              {{ $product['product_name'] }}
                           </td>
 
-                          <td>
+                          {{-- <td>
                             {{ $product['product_code']}}
-                          </td>
+                          </td> --}}
 
                           <td>
                             {{ $product['product_color']}}
@@ -97,7 +97,7 @@
                             @endif
                           </td>
 
-                          <td>
+                          {{-- <td>
                             {{ $product['section']['name']}}
                           </td>
 
@@ -112,7 +112,7 @@
                               {{ ucfirst($product['admin_type'])}}
                             @endif
                             
-                          </td>
+                          </td> --}}
                           
 
                           <td>
