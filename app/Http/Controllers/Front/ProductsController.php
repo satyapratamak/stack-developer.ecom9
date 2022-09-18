@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Section;
 use App\Models\ProductFilters;
-
+use App\Models\ProductsAttributes;
 
 class ProductsController extends Controller
 {
@@ -20,9 +20,14 @@ class ProductsController extends Controller
         if ($request->ajax()) {
             $data = $request->all();
 
+
             $url = $data['url'];
             $_GET['sort'] = $data['sort'];
             $sections = Section::sections();
+
+            // echo "<pre>";
+            // print_r($data);
+            // die;
 
 
             $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
@@ -30,8 +35,10 @@ class ProductsController extends Controller
 
                 $categoryDetails = Category::categoryDetails($url);
 
+
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
 
+                $getSizes = ProductFilters::getSizes($url);
 
                 // Checking for Dynamic Filters
                 $productFilters = ProductFilters::productFilters();
@@ -56,9 +63,15 @@ class ProductsController extends Controller
                     }
                 }
 
+                if (isset($data['size']) && !empty($data['size'])) {
+                    $productIds = ProductsAttributes::select('product_id')->whereIn('size', $data['size'])->pluck('product_id')->toArray();
+                    $categoryProducts->whereIn('id', $productIds);
+                }
+
                 //$categoryProducts = $categoryProducts->paginate(3);
                 $categoryProducts = $categoryProducts->get()->toArray();
-                return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
+                return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes'));
+                //return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);
             }
@@ -73,6 +86,9 @@ class ProductsController extends Controller
 
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
 
+                //$getSizes = ProductFilters::getSizes($url);
+
+                // Checking for sort
                 if (isset($_GET['sort']) && !empty($_GET['sort'])) {
                     if ($_GET['sort'] == "product_latest") {
                         $categoryProducts->orderby('products.id', 'DESC');
@@ -87,9 +103,14 @@ class ProductsController extends Controller
                     }
                 }
 
+                // Checking for size filters
+                // if (isset($data['size']) && !empty($data['size'])) {
+                // }
+
                 //$categoryProducts = $categoryProducts->paginate(3);
                 $categoryProducts = $categoryProducts->get()->toArray();
 
+                //return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes'));
                 return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);

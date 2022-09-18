@@ -8,7 +8,43 @@ $productFilters = ProductFilters::productFilters();
 
 
 $(document).ready(function(){
+
+    // Sort By Filters
     $("#sort").on("change", function(){
+        
+
+        var sort = $("#sort").val();
+        var url = $("#url").val();
+         @foreach( $productFilters as $filters )
+        var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
+        @endforeach
+        //var fabric = get_filters('fabric');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url : url,
+            method : "POST",
+
+            data : {
+                sort : sort, 
+                url : url, 
+                @foreach( $productFilters as $filters )
+                {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
+                @endforeach
+            },
+            success : function(data) {
+                $(".filter_products").html(data);
+            },
+            error : function() {
+                alert("Error");
+            }
+
+        });
+    });
+
+    // Size Filter
+    $(".size").on("change", function(){
         //this.form.submit();
         //type = this.val();
 
@@ -34,10 +70,12 @@ $(document).ready(function(){
 
         var sort = $("#sort").val();
         var url = $("#url").val();
+        var size = get_filters('size');
+        alert(size);
          @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
         @endforeach
-        //var fabric = get_filters('fabric');
+        
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -48,6 +86,7 @@ $(document).ready(function(){
             data : {
                 sort : sort, 
                 url : url, 
+                size : size,
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach

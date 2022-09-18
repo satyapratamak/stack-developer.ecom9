@@ -49,70 +49,20 @@ use App\Models\ProductFilters;
     <!-- Fetch-Categories-from-Root-Category  /- -->
     <!-- Filters -->
     <!-- Filter-Size -->
+    <?php
+        $getSizes = ProductFilters::getSizes($url);
+    ?>
     <div class="facet-filter-associates">
         <h3 class="title-name">Size</h3>
         <form class="facet-form" action="#" method="post">
             <div class="associate-wrapper">
-                <input type="checkbox" class="check-box" id="cbs-01">
-                <label class="label-text" for="cbs-01">Male 2XL
-                    <span class="total-fetch-items">(2)</span>
+                @foreach ($getSizes as $key=> $size)               
+                <input type="checkbox" class="check-box size" name="size[]" id="size{{$key}}" value="{{ $size }}">
+                <label class="label-text" for="size{{$key}}">{{ $size }}
+                    {{-- <span class="total-fetch-items">(2)</span> --}}
                 </label>
-                <input type="checkbox" class="check-box" id="cbs-02">
-                <label class="label-text" for="cbs-02">Male 3XL
-                    <span class="total-fetch-items">(2)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-03">
-                <label class="label-text" for="cbs-03">Kids 4
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-04">
-                <label class="label-text" for="cbs-04">Kids 6
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-05">
-                <label class="label-text" for="cbs-05">Kids 8
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-06">
-                <label class="label-text" for="cbs-06">Kids 10
-                    <span class="total-fetch-items">(2)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-07">
-                <label class="label-text" for="cbs-07">Kids 12
-                    <span class="total-fetch-items">(2)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-08">
-                <label class="label-text" for="cbs-08">Female Small
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-09">
-                <label class="label-text" for="cbs-09">Male Small
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-10">
-                <label class="label-text" for="cbs-10">Female Medium
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-11">
-                <label class="label-text" for="cbs-11">Male Medium
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-12">
-                <label class="label-text" for="cbs-12">Female Large
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-13">
-                <label class="label-text" for="cbs-13">Male Large
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-14">
-                <label class="label-text" for="cbs-14">Female XL
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-15">
-                <label class="label-text" for="cbs-15">Male XL
-                    <span class="total-fetch-items">(0)</span>
-                </label>
+                @endforeach
+                
             </div>
         </form>
     </div>
