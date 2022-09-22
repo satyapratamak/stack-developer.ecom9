@@ -25,9 +25,6 @@ class ProductsController extends Controller
             $_GET['sort'] = $data['sort'];
             $sections = Section::sections();
 
-            // echo "<pre>";
-            // print_r($data);
-            // die;
 
 
             $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
@@ -38,7 +35,13 @@ class ProductsController extends Controller
 
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
 
+                // Filter Size
                 $getSizes = ProductFilters::getSizes($url);
+
+                // Filter Color
+                $getColors = ProductFilters::getColors($url);
+
+
 
                 // Checking for Dynamic Filters
                 $productFilters = ProductFilters::productFilters();
@@ -68,9 +71,14 @@ class ProductsController extends Controller
                     $categoryProducts->whereIn('id', $productIds);
                 }
 
+                if (isset($data['color']) && !empty($data['color'])) {
+                    $productIds = Product::select('id')->whereIn('product_color', $data['color'])->pluck('id')->toArray();
+                    $categoryProducts->whereIn('id', $productIds);
+                }
+
                 //$categoryProducts = $categoryProducts->paginate(3);
                 $categoryProducts = $categoryProducts->get()->toArray();
-                return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes'));
+                return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes', 'getColors'));
                 //return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);
@@ -86,7 +94,12 @@ class ProductsController extends Controller
 
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
 
-                //$getSizes = ProductFilters::getSizes($url);
+                // Filter Size
+                $getSizes = ProductFilters::getSizes($url);
+
+                // Filter Color
+                $getColors = ProductFilters::getColors($url);
+
 
                 // Checking for sort
                 if (isset($_GET['sort']) && !empty($_GET['sort'])) {
@@ -110,8 +123,8 @@ class ProductsController extends Controller
                 //$categoryProducts = $categoryProducts->paginate(3);
                 $categoryProducts = $categoryProducts->get()->toArray();
 
-                //return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes'));
-                return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
+                return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes', 'getColors'));
+                //return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);
             }

@@ -49,9 +49,7 @@ use App\Models\ProductFilters;
     <!-- Fetch-Categories-from-Root-Category  /- -->
     <!-- Filters -->
     <!-- Filter-Size -->
-    <?php
-        $getSizes = ProductFilters::getSizes($url);
-    ?>
+    
     <div class="facet-filter-associates">
         <h3 class="title-name">Size</h3>
         <form class="facet-form" action="#" method="post">
@@ -67,16 +65,20 @@ use App\Models\ProductFilters;
         </form>
     </div>
     <!-- Filter-Size -->
+
+
     <!-- Filter-Color -->
     <div class="facet-filter-associates">
         <h3 class="title-name">Color</h3>
         <form class="facet-form" action="#" method="post">
             <div class="associate-wrapper">
-                <input type="checkbox" class="check-box" id="cbs-16">
-                <label class="label-text" for="cbs-16">Heather Grey
-                    <span class="total-fetch-items">(1)</span>
+                 @foreach ($getColors as $key=> $color)
+                <input type="checkbox" class="check-box color" name="color[]" id="color{{$key}}" value="{{ $color }}">
+                <label class="label-text" for="color{{$key}}">{{ $color }}
+                    {{-- <span class="total-fetch-items">(1)</span> --}}
                 </label>
-                <input type="checkbox" class="check-box" id="cbs-17">
+                 @endforeach
+                {{-- <input type="checkbox" class="check-box" id="cbs-17">
                 <label class="label-text" for="cbs-17">Black
                     <span class="total-fetch-items">(1)</span>
                 </label>
@@ -91,7 +93,7 @@ use App\Models\ProductFilters;
                 <input type="checkbox" class="check-box" id="cbs-20">
                 <label class="label-text" for="cbs-20">Black Bean
                     <span class="total-fetch-items">(1)</span>
-                </label>
+                </label> --}}
             </div>
         </form>
     </div>
