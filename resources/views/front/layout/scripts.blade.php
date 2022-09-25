@@ -15,6 +15,9 @@ $(document).ready(function(){
 
         var sort = $("#sort").val();
         var url = $("#url").val();
+        var size = get_filters('size');
+        var color = get_filters('color');
+        var price = get_filters('price');
          @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
         @endforeach
@@ -28,7 +31,10 @@ $(document).ready(function(){
 
             data : {
                 sort : sort, 
-                url : url, 
+                url : url,
+                size : size,
+                color : color,
+                price : price, 
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach
@@ -50,6 +56,7 @@ $(document).ready(function(){
         var url = $("#url").val();
         var size = get_filters('size');
         var color = get_filters('color');
+        var price = get_filters('price');
        
          @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
@@ -67,6 +74,7 @@ $(document).ready(function(){
                 url : url, 
                 size : size,
                 color : color,
+                price : price,
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach
@@ -82,7 +90,48 @@ $(document).ready(function(){
     });
 
     // Color Filter
-    $(".color").on("change", function(){
+    $(".color").on("change", function(){       
+
+        var sort = $("#sort").val();
+        var url = $("#url").val();
+        var color = get_filters('color');
+        var size = get_filters('size');
+        var price = get_filters('price');
+        
+       
+         @foreach( $productFilters as $filters )
+        var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
+        @endforeach
+        
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url : url,
+            method : "POST",
+
+            data : {
+                sort : sort, 
+                url : url, 
+                size : size,
+                color : color,
+                price : price,
+                @foreach( $productFilters as $filters )
+                {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
+                @endforeach
+            },
+            success : function(data) {
+                $(".filter_products").html(data);
+            },
+            error : function() {
+                alert("Error");
+            }
+
+        });
+    });
+
+    // Price Filter
+    $(".price").on("change", function(){
         //this.form.submit();
         //type = this.val();
 
@@ -110,6 +159,7 @@ $(document).ready(function(){
         var url = $("#url").val();
         var color = get_filters('color');
         var size = get_filters('size');
+        var price = get_filters('price');
        
          @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
@@ -127,6 +177,7 @@ $(document).ready(function(){
                 url : url, 
                 size : size,
                 color : color,
+                price : price,
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach
@@ -145,6 +196,9 @@ $(document).ready(function(){
     $('.{{ $filter['filter_column'] }}').on('click', function(){
         var url = $("#url").val();
         var sort = $("#sort option:selected").val();
+        var color = get_filters('color');
+        var size = get_filters('size');
+        var price = get_filters('price');
         
         @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
@@ -158,6 +212,9 @@ $(document).ready(function(){
             data : {
                 url : url,
                 sort : sort,
+                size : size,
+                color : color,
+                price : price,
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach

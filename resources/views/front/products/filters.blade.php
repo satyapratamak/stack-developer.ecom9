@@ -124,6 +124,24 @@ use App\Models\ProductFilters;
     </div>
     <!-- Filter-Brand /- -->
 
+    <!-- Filter-Price -->
+    <div class="facet-filter-associates">
+        <h3 class="title-name">Price</h3>
+        <form class="facet-form" action="#" method="post">
+            <div class="associate-wrapper">
+                @foreach ($prices as $key => $price)
+                    
+                
+                <input type="checkbox" class="check-box price" name="price[]" id="price{{$key}}" value="{{ $price }}">
+                <label class="label-text" for="price{{$key}}">{{ $price }}
+                    {{-- <span class="total-fetch-items">(1)</span> --}}
+                </label>
+                 @endforeach
+            </div>
+        </form>
+    </div>
+    <!-- Filter-Brand /- -->
+
     <!-- Filter -->
     @foreach ($productFilters as $filter)        
     <?php
@@ -150,7 +168,7 @@ use App\Models\ProductFilters;
     @endforeach
     <!-- Filter /- -->
 
-    <!-- Filter-Price -->
+    <!-- Sliding Price Filter -->
     <div class="facet-filter-by-price">
         <h3 class="title-name">Price</h3>
         <form class="facet-form" action="#" method="post">
@@ -169,7 +187,9 @@ use App\Models\ProductFilters;
             <button type="submit" class="button button-primary">Filter</button>
         </form>
     </div>
-    <!-- Filter-Price /- -->
+    <!-- Sliding Price Filter /- -->
+
+    
     <!-- Filter-Free-Shipping -->
     <div class="facet-filter-by-shipping">
         <h3 class="title-name">Shipping</h3>

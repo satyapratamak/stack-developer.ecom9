@@ -19,6 +19,9 @@ class ProductsController extends Controller
         $productFilters = ProductFilters::productFilters();
         if ($request->ajax()) {
             $data = $request->all();
+            // echo "<pre>";
+            // print_r($data);
+            //die;
 
 
             $url = $data['url'];
@@ -40,6 +43,10 @@ class ProductsController extends Controller
 
                 // Filter Color
                 $getColors = ProductFilters::getColors($url);
+
+                // Prices
+                $prices = array('0-1000', '1000-2000', '2000-5000', '5000-10000', '10000 - 100000', '>100000');
+
 
 
 
@@ -76,6 +83,36 @@ class ProductsController extends Controller
                     $categoryProducts->whereIn('id', $productIds);
                 }
 
+                if (isset($data['price']) && !empty($data['price'])) {
+
+                    $implodePrices = implode('-', $data['price']);
+                    $explodePrices = explode('-', $implodePrices);
+
+                    $productIds = Product::select('id');
+
+                    if (count($explodePrices) == 1) {
+
+                        $productIds->where('product_price', '>', 100000);
+                    } else if ((count($explodePrices) % 2) != 0) {
+
+                        array_pop($explodePrices);
+                        array_push($explodePrices, '100000');
+                        array_push($explodePrices, '2147483647');
+
+                        $min = reset($explodePrices);
+                        $max = end($explodePrices);
+                        $productIds->whereBetween('product_price', [$min, $max]);
+                    } else {
+                        $min = reset($explodePrices);
+                        $max = end($explodePrices);
+                        $productIds->whereBetween('product_price', [$min, $max]);
+                    }
+
+                    $productIds->pluck('id')->toArray();
+
+                    $categoryProducts->whereIn('id', $productIds);
+                }
+
                 //$categoryProducts = $categoryProducts->paginate(3);
                 $categoryProducts = $categoryProducts->get()->toArray();
                 return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes', 'getColors'));
@@ -100,6 +137,9 @@ class ProductsController extends Controller
                 // Filter Color
                 $getColors = ProductFilters::getColors($url);
 
+                // Prices
+                $prices = array('0-1000', '1000-2000', '2000-5000', '5000-10000', '10000-100000', '> 100000');
+
 
                 // Checking for sort
                 if (isset($_GET['sort']) && !empty($_GET['sort'])) {
@@ -123,7 +163,7 @@ class ProductsController extends Controller
                 //$categoryProducts = $categoryProducts->paginate(3);
                 $categoryProducts = $categoryProducts->get()->toArray();
 
-                return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes', 'getColors'));
+                return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes', 'getColors', 'prices'));
                 //return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);
