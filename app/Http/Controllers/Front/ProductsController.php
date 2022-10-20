@@ -73,48 +73,49 @@ class ProductsController extends Controller
                     }
                 }
 
+                // Checking for size
                 if (isset($data['size']) && !empty($data['size'])) {
                     $productIds = ProductsAttributes::select('product_id')->whereIn('size', $data['size'])->pluck('product_id')->toArray();
                     $categoryProducts->whereIn('id', $productIds);
                 }
 
+                // Checking for color
                 if (isset($data['color']) && !empty($data['color'])) {
                     $productIds = Product::select('id')->whereIn('product_color', $data['color'])->pluck('id')->toArray();
                     $categoryProducts->whereIn('id', $productIds);
                 }
 
+                // Checking for brand
+                if (isset($data['brand']) && !empty($data['brand'])) {
+                    $productIds = Product::select('id')->whereIn('brand_id', $data['brand'])->pluck('id')->toArray();
+                    $categoryProducts->whereIn('id', $productIds);
+                }
+
+                // Checking for price
                 if (isset($data['price']) && !empty($data['price'])) {
 
-                    $implodePrices = implode('-', $data['price']);
-                    $explodePrices = explode('-', $implodePrices);
+                    foreach ($data['price'] as $key => $price) {
 
-                    $productIds = Product::select('id');
-
-                    if (count($explodePrices) == 1) {
-
-                        $productIds->where('product_price', '>', 100000);
-                    } else if ((count($explodePrices) % 2) != 0) {
-
-                        array_pop($explodePrices);
-                        array_push($explodePrices, '100000');
-                        array_push($explodePrices, '2147483647');
-
-                        $min = reset($explodePrices);
-                        $max = end($explodePrices);
-                        $productIds->whereBetween('product_price', [$min, $max]);
-                    } else {
-                        $min = reset($explodePrices);
-                        $max = end($explodePrices);
-                        $productIds->whereBetween('product_price', [$min, $max]);
+                        if (str_contains($price, '-')) {
+                            $priceArr = explode("-", $price);
+                        } else {
+                            $priceArr = explode("-", "100000-2147483647");
+                        }
+                        //$priceArr = explode("-", $price);
+                        $priceArr =
+                            preg_replace("/[^a-zA-Z 0-9]+/", "", $priceArr);
+                        $productIds[] = Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])
+                            ->pluck('id')->toArray();
                     }
 
-                    $productIds->pluck('id')->toArray();
+
+                    $productIds = call_user_func_array('array_merge', $productIds);
+
 
                     $categoryProducts->whereIn('id', $productIds);
                 }
 
-                //$categoryProducts = $categoryProducts->paginate(3);
-                $categoryProducts = $categoryProducts->get()->toArray();
+                $categoryProducts = $categoryProducts->paginate(30);
                 return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes', 'getColors'));
                 //return view('front.products.ajax_products_listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
@@ -138,7 +139,10 @@ class ProductsController extends Controller
                 $getColors = ProductFilters::getColors($url);
 
                 // Prices
-                $prices = array('0-1000', '1000-2000', '2000-5000', '5000-10000', '10000-100000', '> 100000');
+                $prices = array('0 - 1,000', '1,000 - 2,000', '2,000 - 5,000', ' 5,000 - 10,000', '10,000 - 100,000', '> 100,000');
+
+                // Brands
+                $getBrands = ProductFilters::getBrands($url);
 
 
                 // Checking for sort
@@ -161,9 +165,10 @@ class ProductsController extends Controller
                 // }
 
                 //$categoryProducts = $categoryProducts->paginate(3);
-                $categoryProducts = $categoryProducts->get()->toArray();
+                $categoryProducts = $categoryProducts->paginate(30);
+                //$categoryProducts = $categoryProducts->get()->toArray();
 
-                return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes', 'getColors', 'prices'));
+                return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters', 'getSizes', 'getColors', 'prices', 'getBrands'));
                 //return view('front.products.listing')->with(compact('categoryProducts', 'categoryDetails', 'sections', 'url', 'productFilters'));
             } else {
                 abort(404);

@@ -18,6 +18,8 @@ $(document).ready(function(){
         var size = get_filters('size');
         var color = get_filters('color');
         var price = get_filters('price');
+        var brand = get_filters('brand');
+
          @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
         @endforeach
@@ -34,7 +36,8 @@ $(document).ready(function(){
                 url : url,
                 size : size,
                 color : color,
-                price : price, 
+                price : price,
+                brand : brand, 
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach
@@ -57,6 +60,7 @@ $(document).ready(function(){
         var size = get_filters('size');
         var color = get_filters('color');
         var price = get_filters('price');
+        var brand = get_filters('brand');
        
          @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
@@ -75,6 +79,7 @@ $(document).ready(function(){
                 size : size,
                 color : color,
                 price : price,
+                brand : brand, 
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach
@@ -97,6 +102,7 @@ $(document).ready(function(){
         var color = get_filters('color');
         var size = get_filters('size');
         var price = get_filters('price');
+        var brand = get_filters('brand');
         
        
          @foreach( $productFilters as $filters )
@@ -116,6 +122,7 @@ $(document).ready(function(){
                 size : size,
                 color : color,
                 price : price,
+                brand : brand, 
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach
@@ -131,7 +138,49 @@ $(document).ready(function(){
     });
 
     // Price Filter
-    $(".price").on("change", function(){
+    $(".price").on("change", function(){        
+
+        var sort = $("#sort").val();
+        var url = $("#url").val();
+        var color = get_filters('color');
+        var size = get_filters('size');
+        var price = get_filters('price');
+        var brand = get_filters('brand');
+       
+         @foreach( $productFilters as $filters )
+        var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
+        @endforeach
+        
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url : url,
+            method : "POST",
+
+            data : {
+                sort : sort, 
+                url : url, 
+                size : size,
+                color : color,
+                price : price,
+                brand : brand, 
+                @foreach( $productFilters as $filters )
+                {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
+                @endforeach
+            },
+            success : function(data) {
+                $(".filter_products").html(data);
+            },
+            error : function() {
+                alert("Error");
+            }
+
+        });
+    });
+
+    // Price Filter
+    $(".brand").on("change", function(){
         //this.form.submit();
         //type = this.val();
 
@@ -160,6 +209,7 @@ $(document).ready(function(){
         var color = get_filters('color');
         var size = get_filters('size');
         var price = get_filters('price');
+        var brand = get_filters('brand');
        
          @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
@@ -178,6 +228,7 @@ $(document).ready(function(){
                 size : size,
                 color : color,
                 price : price,
+                brand : brand, 
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach
@@ -199,6 +250,7 @@ $(document).ready(function(){
         var color = get_filters('color');
         var size = get_filters('size');
         var price = get_filters('price');
+        var brand = get_filters('brand');
         
         @foreach( $productFilters as $filters )
         var {{ $filters['filter_column'] }} = get_filters('{{ $filters['filter_column'] }}');
@@ -215,6 +267,7 @@ $(document).ready(function(){
                 size : size,
                 color : color,
                 price : price,
+                brand : brand,
                 @foreach( $productFilters as $filters )
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }},
                 @endforeach

@@ -59,4 +59,18 @@ class ProductFilters extends Model
 
         return $getColors;
     }
+
+    public static function getBrands($url)
+    {
+        $categoryDetails = Category::categoryDetails($url);
+        $getProductIds = Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
+
+        $brandIds =
+            Product::select('brand_id')->whereIn('id', $getProductIds)->groupBy('brand_id')->pluck('brand_id')->toArray();
+
+        $getBrands = Brand::select('id', 'name')->whereIn('id', $brandIds)->get()->toArray();
+        //$getBrands = Product::select('product_color')->whereIn('id', $getProductIds)->groupBy('product_color')->pluck('product_color')->toArray();
+
+        return $getBrands;
+    }
 }

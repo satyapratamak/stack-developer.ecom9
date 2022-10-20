@@ -98,16 +98,19 @@ use App\Models\ProductFilters;
         </form>
     </div>
     <!-- Filter-Color /- -->
+
     <!-- Filter-Brand -->
     <div class="facet-filter-associates">
         <h3 class="title-name">Brand</h3>
         <form class="facet-form" action="#" method="post">
             <div class="associate-wrapper">
-                <input type="checkbox" class="check-box" id="cbs-21">
-                <label class="label-text" for="cbs-21">Calvin Klein
-                    <span class="total-fetch-items">(0)</span>
+                @foreach ($getBrands as $key=> $brand)
+                <input type="checkbox" class="check-box brand" name="brand[]" id="brand{{$key}}" value="{{ $brand['id'] }}">
+                <label class="label-text" for="brand{{$key}}">{{ $brand['name'] }}
+                    {{-- <span class="total-fetch-items">(1)</span> --}}
                 </label>
-                <input type="checkbox" class="check-box" id="cbs-22">
+                 @endforeach
+                {{-- <input type="checkbox" class="check-box" id="cbs-22">
                 <label class="label-text" for="cbs-22">Diesel
                     <span class="total-fetch-items">(0)</span>
                 </label>
@@ -118,7 +121,7 @@ use App\Models\ProductFilters;
                 <input type="checkbox" class="check-box" id="cbs-24">
                 <label class="label-text" for="cbs-24">Tommy Hilfiger
                     <span class="total-fetch-items">(0)</span>
-                </label>
+                </label> --}}
             </div>
         </form>
     </div>
@@ -140,7 +143,7 @@ use App\Models\ProductFilters;
             </div>
         </form>
     </div>
-    <!-- Filter-Brand /- -->
+    <!-- Filter-Price /- -->
 
     <!-- Filter -->
     @foreach ($productFilters as $filter)        
