@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image');
+            $table->enum('confirm', ['No', 'Yes'])->default('No');
             $table->tinyInteger('status');
             $table->timestamps();
         });

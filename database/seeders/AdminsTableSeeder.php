@@ -27,7 +27,7 @@ class AdminsTableSeeder extends Seeder
             //     'image' => '',
             //     'status' => 1,
             // ],
-             [
+            [
                 'id' => 2,
                 'name' => 'Virgi',
                 'type' => 'vendor',
@@ -36,6 +36,7 @@ class AdminsTableSeeder extends Seeder
                 'email' => 'virgi@virgi.com',
                 'password' => '$2a$12$slAZlAAGFq4DR7CpB65ExuNfcGgdN/bB9aQDG097nSClBVYJZl92e',
                 'image' => '',
+                'confirm' => 'No',
                 'status' => 0,
             ],
 

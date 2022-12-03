@@ -164,4 +164,6 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     foreach ($catUrls as $key => $url) {
         Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing');
     }
+
+    Route::get('/vendor/login-register', 'VendorController@loginRegister');
 });

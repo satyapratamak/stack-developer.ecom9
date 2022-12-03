@@ -26,11 +26,12 @@ class VendorsTableSeeders extends Seeder
                 'pincode' => '10110',
                 'mobile' => '12345678910',
                 'email' => 'virgi@virgi.com',
+                'confirm' => 'No',
                 'status' => 0,
 
 
 
-            
+
             ]
         ];
 
