@@ -165,5 +165,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
         Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing');
     }
 
-    Route::get('/vendor/login-register', 'VendorController@loginRegister');
+    Route::get('vendor/login-register', 'VendorController@loginRegister');
+
+    Route::post('vendor/register', 'VendorController@vendorRegister');
 });

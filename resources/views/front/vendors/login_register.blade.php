@@ -22,7 +22,41 @@
     <!-- Account-Page -->
     <div class="page-account u-s-p-t-80">
         <div class="container">
+
+            @if(Session::has('success_message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>SUCCESS : </strong> <br>
+                    {{ Session::get('success_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
+
+                @if(Session::has('error_message'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>ERROR : </strong> <br>
+                    {{ Session::get('error_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
+
+                @if($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>ERROR : </strong> <br>
+                    <?php
+                        echo implode('', $errors->all('<div>:message</div>'));
+                    ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
             <div class="row">
+
+                
                 <!-- Login -->
                 <div class="col-lg-6">
                     <div class="login-wrapper">
@@ -65,27 +99,44 @@
                     <div class="reg-wrapper">
                         <h2 class="account-h2 u-s-m-b-20">Register</h2>
                         <h6 class="account-h6 u-s-m-b-30">Registering for this site allows you to access your order status and history.</h6>
-                        <form>
+                        <form id="vendorForm" action="{{ url('/vendor/register') }}" 
+                        method="post">@csrf
+                            
+                            <!-- Registration : Vendor Name-->
                             <div class="u-s-m-b-30">
-                                <label for="user-name">Username
+                                <label for="vendorname">Name
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="user-name" class="text-field" placeholder="Username">
+                                <input type="text" id="vendorname" name="name" class="text-field" placeholder="Vendor Name">
                             </div>
+
+                            <!-- Registration : Vendor Mobile-->
                             <div class="u-s-m-b-30">
-                                <label for="email">Email
+                                <label for="vendormobile">Mobile
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="email" class="text-field" placeholder="Email">
+                                <input type="text" id="vendormobile" name="mobile" class="text-field" placeholder="Vendor Mobile">
                             </div>
+
+                            <!-- Registration : Vendor Email-->
                             <div class="u-s-m-b-30">
-                                <label for="password">Password
+                                <label for="vendoremail">Email
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="password" class="text-field" placeholder="Password">
+                                <input type="text" id="vendoremail" name="email" class="text-field" placeholder="Email">
                             </div>
+
+                            <!-- Registration : Vendor Password-->
                             <div class="u-s-m-b-30">
-                                <input type="checkbox" class="check-box" id="accept">
+                                <label for="vendorpassword">Password
+                                    <span class="astk">*</span>
+                                </label>
+                                <input type="password" id="password" class="text-field" placeholder="Vendor Password">
+                            </div>
+
+
+                            <div class="u-s-m-b-30">
+                                <input type="checkbox" class="check-box" id="accept" name="accept">
                                 <label class="label-text no-color" for="accept">I’ve read and accept the
                                     <a href="terms-and-conditions.html" class="u-c-brand">terms & conditions</a>
                                 </label>
