@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('mobile');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->enum('confirm', ['No', 'Yes'])->default('No');
             $table->tinyInteger('status');
             $table->timestamps();

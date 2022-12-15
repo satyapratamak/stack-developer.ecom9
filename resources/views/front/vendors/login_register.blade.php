@@ -131,7 +131,7 @@
                                 <label for="vendorpassword">Password
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="password" id="password" class="text-field" placeholder="Vendor Password">
+                                <input type="password" id="password" name="password" class="text-field" placeholder="Vendor Password">
                             </div>
 
 
