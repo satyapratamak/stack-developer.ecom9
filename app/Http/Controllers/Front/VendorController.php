@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Mail;
+
 use App\Models\Vendor;
 use App\Models\Admin;
 
@@ -92,14 +94,73 @@ class VendorController extends Controller
             $admin->updated_at = date("Y-m-d H:i:s");
             $admin->save();
 
+            // Send confirmation email
+            $email = $data['email'];
+            $messageData = [
+                'email' => $email,
+                'name' => $data['name'],
+                'code' => base64_encode($email),
+            ];
+
+            Mail::send('emails.vendor_confirmation', $messageData, function ($message) use ($email) {
+                $message->to($email)->subject('Confirm your Vendor Account');
+            });
+
             DB::commit();
 
-            // Send confirmation email
+
 
             // Redirect back Vendor with Success Message
-            $message = 'Thanks for registering as Vendor. We will confirm by email once your account is approved';
+            $message = 'Thanks for registering as Vendor. Please check your email to activate your Vendor Account';
 
             return redirect()->back()->with('success_message', $message);
+        }
+    }
+
+    public function confirmVendor($email)
+    {
+        // Decode Vendor Email
+        $decodedEmail = base64_decode($email);
+
+        // Check Vendor Mail exists
+        $vendorCount = Vendor::where('email', $decodedEmail)->count();
+
+        if ($vendorCount > 0) {
+            // Vendor Email exists
+
+            // Check activation of the email
+            $vendorDetails =
+                Vendor::where('email', $decodedEmail)->first();
+
+            if ($vendorDetails->confrim == "Yes") {
+                $message = "Your account is already confirmed..Please login to get new feature of our Apps";
+                return redirect('vendor/login-register')->with('error_message', $message);
+            } else {
+                // Update confirm column in Admins table and Vendor table
+                Admin::where('email', $decodedEmail)->update(['confirm' => 'Yes']);
+                Vendor::where('email', $decodedEmail)->update(['confirm' => 'Yes']);
+
+                // Send register email
+                $messageData = [
+                    'email' => $decodedEmail,
+                    'name' => $vendorDetails->name,
+                    'mobile' => $vendorDetails->mobile,
+                ];
+
+                //$email = explode(',', $email);
+
+                Mail::send('emails.vendor_confirmed', $messageData, function ($message) use ($decodedEmail) {
+                    $message->to($decodedEmail)->subject('Your Vendor Confired ');
+                });
+
+                //Redirect to Vendor Login/Register page with success message
+                $message = "Your vendor  email account  is confirmed..You can login and add your
+                personal, business and bank details to activate your Vendor Account..";
+
+                return redirect('vendor/login-register')->with('success_message', $message);
+            }
+        } else {
+            abort(404);
         }
     }
 }

@@ -45,8 +45,21 @@ class AdminController extends Controller
 
             $this->validate($request, $rules, $customMessages);
 
-            if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => '1'])) {
-                return redirect('admin/dashboard');
+            // if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => '1'])) {
+            //     return redirect('admin/dashboard');
+            // } else {
+            //     return redirect()->back()->with('error_message', 'Email atau Password tidak valid!');
+            // }
+            if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                if (Auth::guard('admin')->user()->type == "vendor" && Auth::guard('admin')->user()->confirm == "No") {
+                    $message = "Please confirm your email to activate your Vendor Account";
+                    return redirect()->back()->with('error_message', $message);
+                } elseif (Auth::guard('admin')->user()->type != "vendor" && Auth::guard('admin')->user()->status == 0) {
+                    $message = "Your Admin Account is not active";
+                    return redirect()->back()->with('error_message', $message);
+                } else {
+                    return redirect('admin/dashboard');
+                }
             } else {
                 return redirect()->back()->with('error_message', 'Email atau Password tidak valid!');
             }
