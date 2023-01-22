@@ -74,9 +74,9 @@
                 {{-- <img src="{{ asset('admin/images/faces/face28.jpg') }}  " alt="profile"/> --}}
                  @if(!empty(Auth::guard('admin')->user()->image))
                         <img src="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}" alt="profile"/>
-                        
-                      @endif
-                
+                 @else
+                        <img src="{{ url('admin/images/photos/no-image.png')}}" alt="profile"/>
+                 @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <a class="dropdown-item" href="{{ url('admin/update-admin-details') }}">

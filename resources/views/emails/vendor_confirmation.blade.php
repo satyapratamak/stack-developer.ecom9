@@ -4,6 +4,7 @@
     <title></title>
 
 </head>
+    <table>
     <tr><td> Dear {{ $name }}!</td></tr>
     <tr><td> &nbsp; <br></td></tr>
     <tr><td> Please click on below link to activate your Vendor Account</td></tr>
@@ -12,6 +13,7 @@
     <tr><td> Thanks & Regards, </td></tr>
     <tr><td> &nbsp; <br></td></tr>
     <tr><td> PaluArit </td></tr>
+    </table>
 <body>
 
 </body>

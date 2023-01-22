@@ -4,10 +4,10 @@
     <title></title>
 
 </head>
- <table>
+    <table>
     <tr><td> Dear {{ $name }}!</td></tr>
     <tr><td> &nbsp; <br></td></tr>
-    <tr><td> Your Vendor Email is confirmed..Please login and add your personal, business, and bank details so that your account will get approved</td></tr>
+    <tr><td> Your Vendor Account has been approved. Now you can login and add product</td></tr>
     <tr><td> &nbsp; <br></td></tr>
     <tr><td> Name : {{ $name }} </td></tr>
     <tr><td> &nbsp; <br></td></tr>

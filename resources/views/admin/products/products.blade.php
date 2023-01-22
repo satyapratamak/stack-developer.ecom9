@@ -27,15 +27,16 @@
                   </div>
                   @endif
 
-                  @if(Session::has('success_message'))
-                  <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>SUCCESS : </strong> <br>
-                    {{ Session::get('success_message') }}
+                  @if(Session::has('error_message'))
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>ERROR : </strong> <br>
+                    {{ Session::get('error_message') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   @endif
+                  
                   <div class="table-responsive pt-3">
                     <table id="products" class="table table-bordered">
                       <thead>

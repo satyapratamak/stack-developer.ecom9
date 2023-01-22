@@ -13,6 +13,8 @@
           </li>
 
           @if (Auth::guard('admin')->user()->type == 'superadmin')
+          
+          <!-- SETTINGS -->
           <li class="nav-item">
             <a 
 
@@ -56,6 +58,7 @@
             </div>
           </li>
 
+          <!-- ADMINS MANAGEMENT -->
           <li class="nav-item">
             <a 
             @if (Session::get("page") == "view_superadmins" || Session::get("page") == "view_subadmins" || Session::get("page") == "view_vendors" || Session::get("page") == "view_all" || Session::get('page') == "view_vendor_details")
@@ -127,6 +130,7 @@
             </div>
           </li> --}}
 
+          <!-- CATALOGUE MANAGEMENT -->
           <li class="nav-item">
             <a 
             @if (Session::get("page") == "sections" || Session::get("page") == "categories" || Session::get("page") == "products" || Session::get("page") == "brands")
@@ -327,6 +331,48 @@
                     @endif
                   class="nav-link" href="{{ url('admin/update-vendor-details/bank') }}">Bank Details</a>
                 </li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- CATALOGUE MANAGEMENT -->
+          <li class="nav-item">
+            <a 
+            @if (Session::get("page") == "sections" || Session::get("page") == "categories" || Session::get("page") == "products" || Session::get("page") == "brands")
+                  style="background:#4B49AC !important; color:#fff !important;"
+               @endif
+            class="nav-link" data-toggle="collapse" href="#ui-catalogue-management" aria-expanded="false" aria-controls="ui-catalogue-management">
+              <i
+                @if (Session::get("page") == "sections" || Session::get("page") == "categories" || Session::get("page") == "products")
+                  style="color:#fff !important;"
+               @endif
+              class="icon-columns menu-icon"></i>
+              <span class="menu-title">Catalogue Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-catalogue-management">
+              <ul class="nav flex-column sub-menu" style="background: #fff !important; color:#4B49AC !important;">
+                
+                <li class="nav-item"> 
+                  <a 
+                    @if (Session::get('page') == "products")
+                      style="background:#4B49AC !important; color:#fff !important;"
+                    @else
+                      style="background:#fff  !important; color:#4B49AC!important;"
+                    @endif
+                    class="nav-link" href="{{ url('admin/products') }}">Products</a>
+                </li>
+
+                {{-- <li class="nav-item"> 
+                  <a 
+                    @if (Session::get('page') == "filters")
+                      style="background:#4B49AC !important; color:#fff !important;"
+                    @else
+                      style="background:#fff  !important; color:#4B49AC!important;"
+                    @endif
+                    class="nav-link" href="{{ url('admin/products') }}">Filters</a>
+                </li> --}}
+                
               </ul>
             </div>
           </li>
